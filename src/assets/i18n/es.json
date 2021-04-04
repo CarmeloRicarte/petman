@@ -1,1 +1,12 @@
-{}
+{
+  "header": {
+    "home": "Inicio",
+    "about": "Quiénes Somos",
+    "contact": "Contacto"
+  },
+  "footer": {
+    "derechos": "Todos los derechos reservados",
+    "hechoPor": "Hecho por ",
+    "withLove": "con ❤️"
+  }
+}
