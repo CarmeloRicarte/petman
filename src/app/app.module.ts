@@ -3,24 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './corporative/components/header/header.component';
-import { FooterComponent } from './corporative/components/footer/footer.component';
-import { HomeComponent } from './corporative/pages/home/home.component';
-
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
+import { AppComponent } from './app.component';
+import { LanguageService } from './services/language.service';
+import { HomeModule } from './corporative/pages/home/home.module';
 
+// required for AOT compilation
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    HomeComponent
+    AppComponent
   ],
   imports: [
+    HomeModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -28,18 +28,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
+        useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       }
     })
-
   ],
-  providers: [],
+  exports: [TranslateModule],
+  providers: [LanguageService],
   bootstrap: [AppComponent]
 })
-
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 export class AppModule { }
