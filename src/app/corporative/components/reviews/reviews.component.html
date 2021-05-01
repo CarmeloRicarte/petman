@@ -1,0 +1,42 @@
+<section id="reviews">
+  <div class="container pt-100">
+    <div class="row g-2">
+      <div class="section-title text-center mb-50" *ngIf="this.loaded">
+        <span>{{"reviews.valoraciones.span" | translate}}</span>
+        <h2 animateOnScroll animationName="animated fadeInUp">{{"reviews.valoraciones.title" | translate}}</h2>
+      </div>
+      <div class="row" *ngIf="!this.loaded">
+        <p-progressSpinner class="text-center"></p-progressSpinner>
+      </div>
+
+      <div class="col-md-4" *ngFor="let review of reviews">
+        <div class="card p-3 text-center px-4">
+          <div class="user-image"> <img src="../../../../assets/img/corporative-page/reviews/google_icon.svg"
+              class="rounded-circle" width="50" alt="usuario de google"> </div>
+          <div class="user-content">
+            <h5 class="mb-0">{{review.autor}}</h5> <span>{{review.fechaPublicacion}}</span>
+            <p>{{review.textoReview}}</p>
+          </div>
+          <div class="ratings">
+            <i class="pi pi-star" *ngFor="let star of review.valoracion | range"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pt-40" *ngIf="this.loaded">
+        <div class="col-sm-12 col-md-6 col-lg-6 pb-3">
+          <div class="text-center">
+            <a href="https://g.page/piensos-sergio-rocamora/review?rc"
+              class="theme-btn">{{'reviews.valoraciones.valorar' | translate}}</a>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+          <div class="text-center">
+            <a href="https://g.page/piensos-sergio-rocamora?gm" class="theme-btn">{{'reviews.valoraciones.allReviews' |
+              translate}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
