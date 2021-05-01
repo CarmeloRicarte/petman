@@ -1,0 +1,137 @@
+<section class="contact-section pt-130 pb-100" id="contact">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-4">
+        <div class="contact-item-wrapper">
+          <div class="row">
+            <div class="col-12 col-md-6 col-xl-12">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="pi pi-phone" style="font-size: 1.5rem"></i>
+                </div>
+                <div class="contact-content">
+                  <h4>{{"header.contact" | translate}}</h4>
+                  <p>
+                    <a href="tel:+34 965487712">965 48 77 12</a>
+                  </p>
+                  <p>
+                    <a href="tel:+34 696108829">696 10 88 29</a>
+                  </p>
+                  <p><a href="mailto:piensosrocamora@hotmail.com">piensosrocamora@hotmail.com</a></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-12">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="pi pi-map-marker" style="font-size: 1.5rem"></i>
+                </div>
+                <div class="contact-content">
+                  <h4>{{"contact.address.title" | translate}}</h4>
+                  <a
+                    href="https://www.google.es/maps/place/Piensos+Sergio+Rocamora/@38.1771283,-0.8766481,17z/data=!3m1!5s0xd63bd054363a529:0xace19f9c0f93e5!4m5!3m4!1s0xd63bd055c34752f:0x831381b48ee28acc!8m2!3d38.1771591!4d-0.8766377?hl=es">
+                    {{"contact.address.street" | translate}} <br>
+                    {{"contact.address.city" | translate}}
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-12">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <i class="pi pi-clock" style="font-size: 1.5rem"></i>
+                </div>
+                <div class="contact-content">
+                  <h4>{{"contact.schedule.title" | translate}}</h4>
+                  <p>{{"contact.schedule.lunes-viernes" | translate}}</p>
+                  <p>{{"contact.schedule.sabados" | translate}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8">
+        <div class="contact-form-wrapper">
+          <div class="row">
+            <div class="col-xl-10 col-lg-8 mx-auto">
+              <div class="section-title text-center mb-50">
+                <span animateOnScroll animationName="animated fadeInDown">{{"contact.form.contacta-con-nosotros" |
+                  translate}}</span>
+                <h2 animateOnScroll animationName="animated fadeInUp">{{"contact.form.dudas" |
+                  translate}}</h2>
+                <p animateOnScroll animationName="animated fadeInUp">{{"contact.form.description" |
+                  translate}}</p>
+              </div>
+            </div>
+          </div>
+          <form [formGroup]="contactForm" class="contact-form" (ngSubmit)="contactSubmit()">
+            <div class="row">
+              <div class="col-md-6">
+                <input type="text" formControlName="nombre" class="form-control" id="name"
+                  [placeholder]=" 'contact.form.nombre' | translate ">
+                <div *ngIf="getControl.nombre.touched && getControl.nombre.invalid" class="text-danger">
+                  <div *ngIf="getControl.nombre.errors?.required">{{ 'contact.form.validators.required' |
+                    translate:{value: 'contact.form.nombre' | translate} }}</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <input type="email" formControlName="email" id="email"
+                  [placeholder]=" 'contact.form.email' | translate ">
+                <div *ngIf="getControl.email.touched && getControl.email.invalid" class="text-danger">
+                  <div *ngIf="getControl.email.errors?.required">{{ 'contact.form.validators.required' |
+                    translate:{value: 'contact.form.email' | translate} }}</div>
+                  <div *ngIf="getControl.email.errors?.email">{{ 'contact.form.validators.notValid' |
+                    translate:{value: 'contact.form.email' | translate} }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <input type="tel" formControlName="telefono" id="phone"
+                  [placeholder]=" 'contact.form.telefono' | translate ">
+                <div *ngIf="getControl.telefono.touched && getControl.telefono.invalid" class="text-danger">
+                  <div *ngIf="getControl.telefono.errors?.required">{{ 'contact.form.validators.required' |
+                    translate:{value: 'contact.form.telefono' | translate} }}</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <input type="text" formControlName="asunto" id="subject"
+                  [placeholder]=" 'contact.form.asunto' | translate ">
+                <div *ngIf="getControl.asunto.touched && getControl.asunto.invalid" class="text-danger">
+                  <div *ngIf="getControl.asunto.errors?.required">{{ 'contact.form.validators.required' |
+                    translate:{value: 'contact.form.asunto' | translate} }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <textarea formControlName="mensaje" id="message" [placeholder]=" 'contact.form.mensaje' | translate "
+                  rows="5"></textarea>
+                <div *ngIf="getControl.mensaje.touched && getControl.mensaje.invalid" class="text-danger">
+                  <div *ngIf="getControl.mensaje.errors?.required">{{ 'contact.form.validators.required' |
+                    translate:{value: 'contact.form.mensaje' | translate} }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="button text-center">
+                  <button type="submit" class="theme-btn" [disabled]="!contactForm.valid">{{'contact.form.enviarMensaje'
+                    | translate}}</button>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="mensajeEnviadoOk">
+              <div class="col-12 pt-5">
+                <div class="alert alert-success" role="alert">
+                  {{ "contact.form.submitOk" | translate }}
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
