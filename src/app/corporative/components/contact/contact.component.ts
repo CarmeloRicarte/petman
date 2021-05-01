@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ContactService } from 'src/app/services/corporative-page/contact.service';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, OnDestroy {
   contactForm!: FormGroup;
   errorEnvio = false;
   mensajeEnviadoOk = false;
 
-  constructor(public formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private contactService: ContactService) { }
 
   ngOnInit(): void {
     this.contactForm = this.formBuilder.group({
@@ -23,9 +24,27 @@ export class ContactComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.errorEnvio = false;
+    this.mensajeEnviadoOk = false;
+  }
+
   contactSubmit(): void {
-    console.log(this.contactForm.value, this.contactForm.valid);
-    this.mensajeEnviadoOk = true;
+    this.contactService.sendEmail(this.contactForm.value).then(
+      (res) => {
+        if (res.response.indexOf('OK') !== -1) {
+          this.mensajeEnviadoOk = true;
+          this.contactForm.reset();
+        }
+      },
+      (error) => {
+        console.error(error);
+        if (this.mensajeEnviadoOk) {
+          this.mensajeEnviadoOk = false;
+        }
+        this.errorEnvio = true;
+        this.contactForm.reset();
+      });
   }
 
   get getControl(): any {
