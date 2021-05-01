@@ -1,0 +1,62 @@
+<header class="header navbar-area psr-bg-gradient fixed-top">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-12">
+        <nav class="navbar navbar-expand-lg">
+          <a class="navbar-brand" href="#home">
+            <img src="../../../../assets/img/logo/pienso.svg" alt="logo piensos Sergio Rocamora" width="80" height="80">
+            Piensos Sergio Rocamora
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="toggler-icon"></span>
+            <span class="toggler-icon"></span>
+            <span class="toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+            <ul id="nav" class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="page-scroll active" id="home-link" href="#home"
+                  (click)='manageActiveClass("home-link")'>{{"header.home" | translate
+                  }}</a>
+              </li>
+              <li class="nav-item">
+                <a class="page-scroll" id="about-link" href="#about"
+                  (click)='manageActiveClass("about-link")'>{{"header.about" | translate
+                  }}</a>
+              </li>
+              <li class="nav-item">
+                <a class="page-scroll" id="services-link" href="#services"
+                  (click)='manageActiveClass("services-link")'>{{"header.services" |
+                  translate
+                  }}</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="page-scroll" id="reviews-link" href="#reviews"
+                  (click)='manageActiveClass("reviews-link")'>{{"header.reviews" |
+                  translate
+                  }}</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="page-scroll" id="contact-link" href="#contact"
+                  (click)='manageActiveClass("contact-link")'>{{"header.contact" |
+                  translate
+                  }}</a>
+              </li>
+            </ul>
+            <div class="header-btn">
+              <a class="theme-btn"><i class="pi pi-user"></i>
+                {{"header.employeeAccess" | translate
+                }}</a>
+            </div>
+          </div> <!-- navbar collapse -->
+        </nav> <!-- navbar -->
+      </div>
+    </div> <!-- row -->
+  </div> <!-- container -->
+
+</header>
