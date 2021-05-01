@@ -129,6 +129,13 @@
                 </div>
               </div>
             </div>
+            <div class="row" *ngIf="errorEnvio">
+              <div class="col-12 pt-5">
+                <div class="alert alert-danger" role="alert">
+                  {{ "contact.form.submitFailed" | translate }}
+                </div>
+              </div>
+            </div>
           </form>
         </div>
       </div>

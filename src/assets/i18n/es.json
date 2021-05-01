@@ -28,6 +28,7 @@
       "nombre": "Nombre",
       "telefono": "Teléfono",
       "submitOk": "Mensaje enviado correctamente. Gracias por contactar con nosotros. Te responderemos lo antes posible.",
+      "submitFailed": "Error en el envío del mensaje. Por favor, inténtelo más tarde.",
       "validators": {
         "required": "{{ value }} es obligatorio",
         "notValid": "{{ value }} no es válido"

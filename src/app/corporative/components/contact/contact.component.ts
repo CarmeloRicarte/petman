@@ -28,7 +28,7 @@ export class ContactComponent implements OnInit {
     this.mensajeEnviadoOk = true;
   }
 
-  get getControl() {
+  get getControl(): any {
     return this.contactForm.controls;
   }
 

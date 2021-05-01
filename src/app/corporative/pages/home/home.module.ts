@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AnimateOnScrollModule } from 'ng2-animate-on-scroll';
-import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module, RecaptchaFormsModule } from 'ng-recaptcha';
 
 import { ReviewsService } from '../../../services/corporative-page/reviews.service';
 
@@ -33,9 +32,7 @@ import { CarouselComponent } from '../../components/carousel/carousel.component'
     AnimateOnScrollModule.forRoot(),
     ProgressSpinnerModule,
     ReactiveFormsModule,
-    FormsModule,
-    RecaptchaV3Module,
-    RecaptchaFormsModule
+    FormsModule
   ],
   declarations: [
     RangePipe,
@@ -48,7 +45,7 @@ import { CarouselComponent } from '../../components/carousel/carousel.component'
     ContactComponent,
     CarouselComponent
   ],
-  providers: [LanguageService, ReviewsService, [{ provide: RECAPTCHA_V3_SITE_KEY, useValue: '6LcHx8EaAAAAACJEMH-JZH7A4bt9g_r_PSOLDTfC' }]],
+  providers: [LanguageService, ReviewsService],
   exports: [HomeComponent]
 })
 export class HomeModule { }
