@@ -5,6 +5,10 @@ import { HomeComponent } from './corporative/pages/home/home.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  {
+    path: 'login',
+    loadChildren: () => import('./backoffice/auth/auth.module').then(m => m.AuthModule)
+  },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 
