@@ -30,7 +30,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   contactSubmit(): void {
-    this.contactService.sendEmail(this.contactForm.value).then(
+    this.contactService.sendEmail(this.contactForm.value).subscribe(
       (res) => {
         if (res.response.indexOf('OK') !== -1) {
           this.mensajeEnviadoOk = true;
