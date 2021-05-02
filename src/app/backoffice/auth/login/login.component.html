@@ -2,10 +2,27 @@
   <div class="login-wrapper">
     <div class="login-panel">
       <h4 class="pb-50">Piensos Sergio Rocamora</h4>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="p-fluid">
+          <div class="row mb-2">
+            <div class="col">
+              <input type="text" pInputText id="usuario" placeholder="Usuario" formControlName="usuario" />
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col">
+              <input pPassword id="contraseña" placeholder="Contraseña" [feedback]="false"
+                formControlName="contraseña" />
+            </div>
+          </div>
 
-      <input type="text" pInputText id="usuario" placeholder="Usuario" />
-      <input pPassword id="contraseña" placeholder="Contraseña" [feedback]="false" />
-      <button pButton pRipple label="Iniciar Sesión" type="button"></button>
+          <div class="row">
+            <div class="col">
+              <button pButton pRipple label="Iniciar Sesión" type="submit" [disabled]="!loginForm.valid"></button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
     <div class="login-footer">
       <h6>Copyright Ⓒ Piensos Sergio Rocamora</h6>
