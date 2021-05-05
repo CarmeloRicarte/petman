@@ -6,14 +6,17 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
-import { LanguageService } from './services/language.service';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
+import { HomeModule } from './corporative/pages/home/home.module';
+import { PagesModule } from './backoffice/pages/pages.module';
+import { ServiceModule } from './services/service.module';
+
+import { LanguageService } from './services/language.service';
 
 import { AppComponent } from './app.component';
 
-import { HomeModule } from './corporative/pages/home/home.module';
-import { ToastrModule } from 'ngx-toastr';
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -36,7 +39,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       }
     }),
-    HomeModule
+    HomeModule,
+    PagesModule,
+    ServiceModule
   ],
   exports: [TranslateModule],
   providers: [LanguageService],
