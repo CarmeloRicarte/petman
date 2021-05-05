@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { Usuario } from 'src/app/models/backoffice/usuario.model';
-import { LoginService } from 'src/app/services/backoffice/login.service';
+import { UsuarioService } from 'src/app/services/backoffice/usuario/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,7 @@ import { LoginService } from 'src/app/services/backoffice/login.service';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private loginService: LoginService,
+  constructor(private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     private router: Router,
     private toastr: ToastrService
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       this.loginForm.value.contraseña
     );
 
-    this.loginService.login(usuario)
+    this.usuarioService.login(usuario)
       .subscribe(() => {
         this.toastr.success('Sesión iniciada correctamente');
         this.router.navigate(['/dashboard']);
