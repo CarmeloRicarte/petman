@@ -8,6 +8,16 @@ import { LanguageService } from './services/language.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  menuMode = 'sidebar';
+
+  darkMode = 'light';
+
+  topbarTheme = 'light';
+
+  menuTheme = 'light';
+
+  inputStyle = 'outlined';
+
   title = 'petman';
 
   constructor(private primengConfig: PrimeNGConfig, private languageService: LanguageService) { }
