@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthRoutingModule } from './backoffice/auth/auth-routing.module';
+import { PagesRoutingModule } from './backoffice/pages/pages-routing.module';
 
 import { HomeComponent } from './corporative/pages/home/home.component';
 
@@ -13,7 +15,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [
+    RouterModule.forRoot(routes, { useHash: true }),
+    PagesRoutingModule,
+    AuthRoutingModule
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
