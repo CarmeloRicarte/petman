@@ -58,6 +58,23 @@ export class PagesComponent implements OnInit {
     this.menuClick = false;
   }
 
+  onTopbarItemClick(event: any, item: any) {
+    this.topbarItemClick = true;
+
+    if (this.activeTopbarItem === item) {
+      this.activeTopbarItem = null;
+    } else {
+      this.activeTopbarItem = item;
+    }
+
+    if (item.className === 'topbar-item search-item') {
+      this.search = !this.search;
+      this.searchClick = !this.searchClick;
+    }
+
+    event.preventDefault();
+  }
+
   onMenuButtonClick(event: any) {
     this.menuClick = true;
     this.topbarMenuActive = false;
