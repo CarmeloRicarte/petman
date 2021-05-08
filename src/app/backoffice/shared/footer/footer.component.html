@@ -1,1 +1,39 @@
-<p>footer works!</p>
+<div class="layout-footer">
+  <div class="p-grid">
+    <div class="p-col-12">
+      <div class="p-grid">
+        <div class="p-col-4">
+          <span class="footer-menutitle">MAPA DEL SITIO</span>
+          <ul>
+            <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+            <li><a [routerLink]="['/productos']">Productos</a></li>
+            <li><a [routerLink]="['/categorias']">Categorías</a></li>
+            <li><a [routerLink]="['/subcategorias']">Subcategorías</a></li>
+          </ul>
+        </div>
+        <div class="p-col-4">
+          <span class="footer-menutitle"></span>
+          <ul>
+            <li><a [routerLink]="['/envio-mercancia']">Envíos de mercancía</a></li>
+            <li><a [routerLink]="['/recepcion-mercancia']">Recepciones de mercancía</a></li>
+          </ul>
+        </div>
+        <div class="p-col-4">
+          <span class="footer-menutitle"></span>
+          <ul>
+            <li><a [routerLink]="['/clientes']">Clientes</a></li>
+            <li><a [routerLink]="['/proveedores']">Proveedores</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <div class="p-col-12">
+      <div class="footer-bottom">
+        <h4>Piensos Sergio Rocamora</h4>
+        <h6>Copyright Ⓒ Piensos Sergio Rocamora</h6>
+      </div>
+
+    </div>
+  </div>
+</div>
