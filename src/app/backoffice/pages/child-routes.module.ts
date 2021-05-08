@@ -13,8 +13,6 @@ const childRoutes: Routes = [
   // Inicio Rutas de administrador
   { path: 'usuarios', canActivate: [AdminGuard], component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
   // Fin Rutas de administrador
-
-  { path: '', pathMatch: 'full', redirectTo: '/login' }
 ]
 
 @NgModule({

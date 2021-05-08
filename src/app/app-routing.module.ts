@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthRoutingModule } from './backoffice/auth/auth-routing.module';
-import { PagesRoutingModule } from './backoffice/pages/pages-routing.module';
 
 import { HomeComponent } from './corporative/pages/home/home.component';
 
@@ -11,14 +9,16 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./backoffice/auth/auth.module').then(m => m.AuthModule)
   },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./backoffice/pages/pages-routing.module').then(m => m.PagesRoutingModule)
+  },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { useHash: true }),
-    PagesRoutingModule,
-    AuthRoutingModule
+    RouterModule.forRoot(routes, { useHash: true })
   ],
   exports: [RouterModule]
 })
