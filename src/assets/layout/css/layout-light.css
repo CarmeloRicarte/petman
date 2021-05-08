@@ -1047,8 +1047,7 @@ a {
   justify-content: flex-start;
   -ms-flex-align: center;
   align-items: center;
-  padding: 0 22px;
-  padding-right: 20px;
+  padding: 0 10px;
 }
 
 .menu-wrapper .sidebar-logo .sidebar-pin {
@@ -1070,9 +1069,10 @@ a {
 }
 
 .menu-wrapper .sidebar-logo img {
-  width: 17px;
-  height: 20px;
   border: 0 none;
+  height: 50px;
+  width: 45px;
+  filter: invert(29%) sepia(75%) saturate(2601%) hue-rotate(219deg) brightness(95%) contrast(93%);
 }
 
 .menu-wrapper .layout-menu-container {
@@ -1216,6 +1216,9 @@ a {
   }
   .layout-wrapper.layout-static .menu-wrapper .sidebar-logo img {
     display: inline;
+    height: 50px;
+    width: 45px;
+    filter: invert(29%) sepia(75%) saturate(2601%) hue-rotate(219deg) brightness(95%) contrast(93%);
   }
   .layout-wrapper.layout-static .menu-wrapper .sidebar-logo .app-name {
     display: inline;

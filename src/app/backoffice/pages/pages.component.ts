@@ -8,7 +8,6 @@ import { AppComponent } from 'src/app/app.component';
   ]
 })
 export class PagesComponent implements OnInit {
-  sidebarStatic!: boolean;
 
   sidebarActive = false;
 
@@ -27,6 +26,8 @@ export class PagesComponent implements OnInit {
   search = false;
 
   menuHoverActive = false;
+
+  tituloTiendaMenu: any;
 
   constructor(public app: AppComponent) { }
 
@@ -91,8 +92,34 @@ export class PagesComponent implements OnInit {
     event.preventDefault();
   }
 
+  onSidebarClick($event: any) {
+    this.menuClick = true;
+  }
+
+  onSidebarMouseOver(event: any) {
+    if (this.app.menuMode === 'sidebar') {
+      this.sidebarActive = !this.isMobile();
+      this.tituloTiendaMenu = document.getElementById('nombreTiendaMenu');
+      this.tituloTiendaMenu.innerHTML = 'Piensos Sergio Rocamora';
+    }
+  }
+
+  onSidebarMouseLeave($event: any) {
+    if (this.app.menuMode === 'sidebar') {
+      this.tituloTiendaMenu = document.getElementById('nombreTiendaMenu');
+      this.tituloTiendaMenu.innerHTML = '';
+      setTimeout(() => {
+        this.sidebarActive = false;
+      }, 250);
+    }
+  }
+
   isMobile() {
     return window.innerWidth <= 991;
+  }
+
+  isDesktop() {
+    return window.innerWidth > 991;
   }
 
   blockBodyScroll(): void {

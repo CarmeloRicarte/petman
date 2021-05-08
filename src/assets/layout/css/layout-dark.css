@@ -1047,8 +1047,7 @@ a {
   justify-content: flex-start;
   -ms-flex-align: center;
   align-items: center;
-  padding: 0 22px;
-  padding-right: 20px;
+  padding: 0 10px;
 }
 
 .menu-wrapper .sidebar-logo .sidebar-pin {
@@ -1070,8 +1069,9 @@ a {
 }
 
 .menu-wrapper .sidebar-logo img {
-  width: 17px;
-  height: 20px;
+  height: 50px;
+  width: 45px;
+  filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(247deg) brightness(105%) contrast(104%);
   border: 0 none;
 }
 
@@ -1215,6 +1215,9 @@ a {
     justify-content: space-between;
   }
   .layout-wrapper.layout-static .menu-wrapper .sidebar-logo img {
+    height: 50px;
+    width: 45px;
+    filter: invert(100%) sepia(2%) saturate(0%) hue-rotate(247deg) brightness(105%) contrast(104%);
     display: inline;
   }
   .layout-wrapper.layout-static .menu-wrapper .sidebar-logo .app-name {

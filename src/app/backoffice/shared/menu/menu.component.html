@@ -1,1 +1,16 @@
-<p>menu works!</p>
+<div class="menu-wrapper" [ngClass]="{'layout-sidebar-active': appMain.sidebarActive}"
+  (click)="appMain.onSidebarClick($event)" (mouseover)="appMain.onSidebarMouseOver($event)"
+  (mouseleave)="appMain.onSidebarMouseLeave($event)">
+  <div class="sidebar-logo">
+    <a [routerLink]="['/dashboard']">
+      <img src="../../../../assets/img/logo/pienso.svg" alt="Logo Piensos Sergio Rocamora">
+      <span id="nombreTiendaMenu"></span>
+    </a>
+  </div>
+  <div class="layout-menu-container">
+    <ul class="layout-menu">
+      <li app-menuitem *ngFor="let item of menu; let i = index;" [item]="item" [index]="i" [root]="true">
+      </li>
+    </ul>
+  </div>
+</div>
