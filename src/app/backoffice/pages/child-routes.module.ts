@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AdminGuard } from '../../guards/admin.guard';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
-import { AdminGuard } from '../../guards/admin.guard';
 
 
 const childRoutes: Routes = [
-  { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+  { path: '', component: DashboardComponent, data: { titulo: 'Dashboard' } },
   // Mantenimientos
 
   // Inicio Rutas de administrador
