@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { PagesRoutingModule } from './pages-routing.module';
 import { SharedModule } from '../shared/shared.module';
-
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 // paginas
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -9,7 +13,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 
 // componentes
 import { PagesComponent } from './pages.component';
-import { CommonModule } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { CommonModule } from '@angular/common';
   imports: [
     PagesRoutingModule,
     SharedModule,
-    CommonModule
+    CommonModule,
+    CardModule,
+    FormsModule,
+    InputTextModule,
+    ButtonModule
   ],
   providers: [],
 })

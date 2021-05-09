@@ -1,0 +1,22 @@
+<div class="p-grid p-fluid">
+  <div class="p-col-12">
+    <p-card header="Datos del Usuario">
+      <form ngNativeValidate #form="ngForm" (ngSubmit)="guardarUsuario(form.value)">
+        <div class="p-field">
+          <span class="p-float-label">
+            <input id="nombre" type="text" [ngModel]="usuario.nombre" name="nombre" pInputText required>
+            <label for="nombre">Nombre</label>
+          </span>
+        </div>
+        <div class="p-field pt-3">
+          <span class="p-float-label">
+            <input id="nick" type="text" [ngModel]="usuario.nick" name="nick" pInputText required>
+            <label for="nick">Nick</label>
+          </span>
+        </div>
+        <button pButton pRipple label="Guardar" type="submit" class="p-button-raised p-button-success">
+        </button>
+      </form>
+    </p-card>
+  </div>
+</div>
