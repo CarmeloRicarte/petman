@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PagesComponent } from './pages.component';
+
 import { LoginGuard } from '../../guards/login.guard';
+import { AdminGuard } from 'src/app/guards/admin.guard';
+
+import { PagesComponent } from './pages.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 
 
 
@@ -10,8 +16,13 @@ const pagesRoutes: Routes = [
     path: '',
     component: PagesComponent,
     canActivate: [LoginGuard],
-    canLoad: [LoginGuard],
-    loadChildren: () => import('./child-routes.module').then(m => m.ChildRoutesModule)
+    children: [
+      { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+      { path: 'perfil-usuario', component: PerfilUsuarioComponent, data: { titulo: 'Perfil de Usuario' } },
+      // Inicio Rutas de administrador
+      { path: 'usuarios', canActivate: [AdminGuard], component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
+      // Fin Rutas de administrador
+    ]
   },
 ];
 

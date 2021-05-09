@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     this.usuarioService.login(usuario)
       .subscribe(() => {
         this.toastr.success('Sesión iniciada correctamente');
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['admin/dashboard']);
       }, (err: any) => {
         this.toastr.error(`Error al iniciar sesión: ${err.error.msg}`);
       });

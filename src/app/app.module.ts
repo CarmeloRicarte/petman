@@ -10,7 +10,6 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { HomeModule } from './corporative/pages/home/home.module';
-import { PagesModule } from './backoffice/pages/pages.module';
 import { ServiceModule } from './services/service.module';
 
 import { LanguageService } from './services/language.service';
@@ -40,7 +39,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       }
     }),
     HomeModule,
-    PagesModule,
     ServiceModule
   ],
   exports: [TranslateModule],

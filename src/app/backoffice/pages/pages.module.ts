@@ -5,6 +5,8 @@ import { SharedModule } from '../shared/shared.module';
 // paginas
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+
 // componentes
 import { PagesComponent } from './pages.component';
 import { CommonModule } from '@angular/common';
@@ -13,7 +15,8 @@ import { CommonModule } from '@angular/common';
   declarations: [
     PagesComponent,
     DashboardComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    PerfilUsuarioComponent
   ],
   imports: [
     PagesRoutingModule,

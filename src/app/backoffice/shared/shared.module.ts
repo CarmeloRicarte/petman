@@ -22,7 +22,6 @@ import { MenuitemComponent } from './menu/menuitem.component';
     CommonModule,
     InputTextModule,
     RouterModule,
-    BrowserAnimationsModule
   ],
   exports: [
     TopbarComponent,

@@ -6,12 +6,12 @@ import { HomeComponent } from './corporative/pages/home/home.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {
-    path: 'login',
+    path: 'auth',
     loadChildren: () => import('./backoffice/auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'dashboard',
-    loadChildren: () => import('./backoffice/pages/pages-routing.module').then(m => m.PagesRoutingModule)
+    path: 'admin',
+    loadChildren: () => import('./backoffice/pages/pages.module').then(m => m.PagesModule)
   },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
