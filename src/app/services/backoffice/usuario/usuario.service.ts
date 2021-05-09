@@ -179,9 +179,9 @@ export class UsuarioService {
       .pipe(
         map((resp: any) => {
           // desestructuramos el usuario
-          const { role, nombre, nick, img, uid } = resp.usuario;
+          const { role, nombre, nick, uid } = resp.usuario;
           // creamos instancia del usuario
-          this.usuario = new Usuario(nombre, nick, '', img, role, uid);
+          this.usuario = new Usuario(nombre, nick, '', role, uid);
           localStorage.setItem('tokenUsuario', resp.token);
           localStorage.setItem('menu', resp.menu);
           return true;
