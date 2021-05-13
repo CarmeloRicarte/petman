@@ -1,1 +1,177 @@
-<p>usuarios works!</p>
+<div class="p-grid">
+  <div class="p-col-12">
+    <div class="card">
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nuevo Usuario" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
+            (click)="crearUsuario()"></button>
+          <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger p-mb-2"
+            (click)="eliminarUsuariosSeleccionados()"
+            [disabled]="!usuariosSeleccionados || !usuariosSeleccionados.length"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="usuarios" [columns]="columnas" [rows]="5" [paginator]="true"
+        [rowsPerPageOptions]="[5,10,25]" [(selection)]="usuariosSeleccionados" [rowHover]="true" dataKey="nick"
+        styleClass="p-datatable-users"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} usuarios"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+            <h5 class="p-m-0">Gestión de Usuarios</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (keyup)="dt.filterGlobal(txtBuscar.value, 'contains')"
+                placeholder="Buscar..." #txtBuscar />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
+                field="{{columna.field}}"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usuario>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="usuario"></p-tableCheckbox>
+            </td>
+            <td><span class="p-column-title">Nombre</span>
+              {{usuario.nombre}}
+            </td>
+
+            <td><span class="p-column-title">Nick</span>
+              {{usuario.nick}}
+            </td>
+            <td><span class="p-column-title">Rol</span>
+              <span [class]="'user-badge status-' + usuario.role">{{usuario.role}}</span>
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                (click)="editarUsuario(usuario)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                (click)="eliminarUsuario(usuario)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{usuarios ? usuarios.length : 0 }} usuarios.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-dialog [(visible)]="usuariosDialogCrear" [style]="{width: '450px'}" header="Detalles del Usuario" [modal]="true"
+      styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="crearUsuarioForm" (ngSubmit)="guardarUsuario(crearUsuarioForm.value, 'crear')">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearUsuarioF.nombre.errors }" name="nombre"
+              autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearUsuarioF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+          <div class="p-field">
+            <label for="nick">Nick</label>
+            <input type="text" pInputText id="nick" formControlName="nick"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearUsuarioF.nick.errors }" name="nick" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearUsuarioF.nick.errors">Nick es
+              obligatorio.</small>
+
+          </div>
+
+          <div class="p-field">
+            <label for="password">Contraseña</label>
+            <input type="password" pPassword id="password" formControlName="password" name="password"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearUsuarioF.password.errors }" weakLabel="Débil"
+              mediumLabel="Media" strongLabel="Fuerte">
+            <small class="p-error" *ngIf="pulsadoSubmit && crearUsuarioF.password.errors">Contraseña es
+              obligatorio.</small>
+
+          </div>
+
+          <div class="p-field">
+            <label class="p-mb-3">Rol</label>
+            <div class="p-formgrid p-grid">
+              <div class="p-field-radiobutton p-col-6">
+                <p-radioButton formControlName="role" name="role" value="USER_ROLE" inputId="user_role">
+                </p-radioButton>
+                <label for="user_role">Usuario</label>
+              </div>
+              <div class="p-field-radiobutton p-col-6">
+                <p-radioButton formControlName="role" inputId="admin_role" name="role" value="ADMIN_ROLE">
+                </p-radioButton>
+                <label for="admin_role">Administrador</label>
+              </div>
+              <small class="p-error" *ngIf="pulsadoSubmit && crearUsuarioF.role.errors">Rol es
+                obligatorio.</small>
+            </div>
+          </div>
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarUsuariosDialog('crear')"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+
+    <p-dialog [(visible)]="usuariosDialogEditar" [style]="{width: '450px'}" header="Detalles del Usuario" [modal]="true"
+      styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="editarUsuarioForm" (ngSubmit)="guardarUsuario(usuario, 'editar')">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre" name="nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarUsuarioF.nombre.errors }"
+              [(ngModel)]="usuario.nombre" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarUsuarioF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+          <div class="p-field">
+            <label for="nick">Nick</label>
+            <input type="text" pInputText id="nick" formControlName="nick" name="nick" [(ngModel)]="usuario.nick"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarUsuarioF.nick.errors }" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarUsuarioF.nick.errors">Nick es
+              obligatorio.</small>
+
+          </div>
+
+          <div class="p-field">
+            <label class="p-mb-3">Rol</label>
+            <div class="p-formgrid p-grid">
+              <div class="p-field-radiobutton p-col-6">
+                <p-radioButton formControlName="role" value="USER_ROLE" [(ngModel)]="usuario.role" inputId="user_role">
+                </p-radioButton>
+                <label for="user_role">Usuario</label>
+              </div>
+              <div class="p-field-radiobutton p-col-6">
+                <p-radioButton inputId="admin_role" formControlName="role" name="role" value="ADMIN_ROLE"
+                  [(ngModel)]="usuario.role">
+                </p-radioButton>
+                <label for="admin_role">Administrador</label>
+              </div>
+            </div>
+          </div>
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarUsuariosDialog('editar')"></button>
+            <button pButton pRipple type="submit" label="Actualizar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+  </div>
+</div>

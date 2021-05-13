@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PagesRoutingModule } from './pages-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { PasswordModule } from 'primeng/password';
+
+
 // paginas
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -13,6 +21,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 
 // componentes
 import { PagesComponent } from './pages.component';
+import { ConfirmationService } from 'primeng/api';
 
 
 @NgModule({
@@ -28,9 +37,16 @@ import { PagesComponent } from './pages.component';
     CommonModule,
     CardModule,
     FormsModule,
+    ReactiveFormsModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
+    ToolbarModule,
+    TableModule,
+    DialogModule,
+    ConfirmDialogModule,
+    RadioButtonModule,
+    PasswordModule
   ],
-  providers: [],
+  providers: [ConfirmationService],
 })
 export class PagesModule { }

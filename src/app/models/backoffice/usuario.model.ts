@@ -3,7 +3,7 @@ export class Usuario {
     public nombre: string,
     public nick: string,
     public password: string,
-    public role?: 'ADMIN_ROLE' | 'USER_ROLE',
+    public role?: string,
     public uid?: string
   ) { }
 }

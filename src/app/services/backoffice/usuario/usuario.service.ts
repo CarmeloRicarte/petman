@@ -54,27 +54,10 @@ export class UsuarioService {
   }
 
   /**
-   * Función para guardar un usuario
-   * @param usuario objeto con datos del usuario
-   */
-  guardarUsuario(usuario: Usuario) {
-    const url = `${environment.urlServicios}/usuarios/${usuario.uid}?token=${this.token}`;
-    return this.http.put(url, usuario, this.headers)
-      .pipe(
-        map((resp: any) => {
-          this.guardarStorage(resp.usuario.uid, this.token, resp.usuario, resp.menu);
-          return resp;
-        }, (err: any) => {
-          return err;
-        })
-      );
-  }
-
-  /**
     * Funcion para obtener los usuarios
     */
-  obtenerUsuarios(desde: number = 0) {
-    const url = `${environment.urlServicios}/usuarios?desde=${desde}`;
+  obtenerUsuarios() {
+    const url = `${environment.urlServicios}/usuarios`;
     return this.http.get(url, this.headers);
   }
 
@@ -96,6 +79,23 @@ export class UsuarioService {
   }
 
   /**
+   * Metodo para eliminar varios usuarios
+   * @param usuarios array de usuarios a eliminar
+   */
+  eliminarUsuarios(usuarios: any[]) {
+    const url = `${environment.urlServicios}/usuarios/deleteSelected`;
+    return this.http.post(url, usuarios, this.headers)
+      .pipe(
+        map((resp: any) => {
+          return resp;
+        }, (err: any) => {
+          return err;
+        })
+      );
+
+  }
+
+  /**
    * Funcion que guarda datos del usuario en el localStorage
    * @param id id del usuario
    * @param token token que se recibe del backend
@@ -106,13 +106,13 @@ export class UsuarioService {
     localStorage.setItem('idUsuario', id);
     localStorage.setItem('tokenUsuario', token);
     localStorage.setItem('usuario', JSON.stringify(usuario));
-    localStorage.setItem('menu', JSON.stringify(menu));
-
+    if (menu) {
+      localStorage.setItem('menu', JSON.stringify(menu));
+      this.menu = menu;
+    }
 
     this.usuario = usuario;
     this.token = token;
-    this.menu = menu;
-
   }
 
   /**
@@ -141,7 +141,7 @@ export class UsuarioService {
     return this.usuario.uid;
   }
 
-  get role(): 'ADMIN_ROLE' | 'USER_ROLE' | undefined {
+  get role(): string | undefined {
     return this.usuario.role;
   }
 
