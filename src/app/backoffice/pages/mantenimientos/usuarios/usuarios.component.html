@@ -68,7 +68,7 @@
       </p-table>
     </div>
 
-    <p-dialog [(visible)]="usuariosDialogCrear" [style]="{width: '450px'}" header="Detalles del Usuario" [modal]="true"
+    <p-dialog [(visible)]="usuariosDialogCrear" [style]="{width: '450px'}" header="Crear Usuario" [modal]="true"
       styleClass="p-fluid">
       <ng-template pTemplate="content">
         <form [formGroup]="crearUsuarioForm" (ngSubmit)="guardarUsuario(crearUsuarioForm.value, 'crear')">
@@ -126,7 +126,7 @@
     </p-dialog>
 
 
-    <p-dialog [(visible)]="usuariosDialogEditar" [style]="{width: '450px'}" header="Detalles del Usuario" [modal]="true"
+    <p-dialog [(visible)]="usuariosDialogEditar" [style]="{width: '450px'}" header="Editar Usuario" [modal]="true"
       styleClass="p-fluid">
       <ng-template pTemplate="content">
         <form [formGroup]="editarUsuarioForm" (ngSubmit)="guardarUsuario(usuario, 'editar')">
