@@ -37,8 +37,6 @@ export class UsuariosComponent implements OnInit {
   columnas: any[] = [];
   totalUsuarios = 0;
 
-  cargando = true;
-
   constructor(private usuarioService: UsuarioService, private fb: FormBuilder, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -75,11 +73,9 @@ export class UsuariosComponent implements OnInit {
      * metodo para obtener los usuarios
      */
   cargarUsuarios() {
-    this.cargando = true;
     this.usuarioService.obtenerUsuarios()
       .subscribe((res: any) => {
         this.usuarios = res.usuarios;
-        this.cargando = false;
         this.totalUsuarios = res.total;
       }, (err) => {
         console.log(err);
