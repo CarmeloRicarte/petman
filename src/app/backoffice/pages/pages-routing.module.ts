@@ -8,8 +8,8 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
-import { ClientesComponent } from './clientes/clientes.component';
-import { ProveedoresComponent } from './proveedores/proveedores.component';
+import { ClientesComponent } from './mantenimientos/clientes/clientes.component';
+import { ProveedoresComponent } from './mantenimientos/proveedores/proveedores.component';
 
 
 
