@@ -28,7 +28,6 @@ export class UsuarioService {
     return this.http.post(url, usuario, this.headers)
       .pipe(
         map((resp: any) => {
-          this.guardarStorage(resp.usuario.uid, resp.token, resp.usuario);
           this.toastr.success(`Usuario ${resp.usuario.nick} creado!`);
         }, (err: any) => {
           this.toastr.error(`Error al crear el usuario: ${err.error.msg}`);
@@ -39,13 +38,16 @@ export class UsuarioService {
   /**
    * Función para actualizar datos de usuario en su perfil
    * @param usuario objeto con datos del usuario
+   * @param origen si se actualiza desde el perfil o desde usuarios
    */
-  actualizarUsuario(usuario: Usuario) {
+  actualizarUsuario(usuario: Usuario, origen: string) {
     const url = `${environment.urlServicios}/usuarios/${usuario.uid}?token=${this.token}`;
     return this.http.put(url, usuario, this.headers)
       .pipe(
         map((resp: any) => {
-          this.guardarStorage(resp.usuario.uid, this.token, resp.usuario);
+          if (origen === 'perfil' || (usuario.uid === this.uid)) {
+            this.guardarStorage(resp.usuario.uid, this.token, resp.usuario);
+          }
           return resp;
         }, (err: any) => {
           return err;

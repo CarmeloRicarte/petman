@@ -21,7 +21,7 @@ export class PerfilUsuarioComponent implements OnInit {
   guardarUsuario(usuario: Usuario): void {
     this.usuario.nombre = usuario.nombre;
     this.usuario.nick = usuario.nick;
-    this.usuarioService.actualizarUsuario(this.usuario)
+    this.usuarioService.actualizarUsuario(this.usuario, 'perfil')
       .subscribe(
         (resp: any) => this.toastr.success(`Usuario ${resp.usuario.nick} actualizado!`),
         (error: any) => this.toastr.error(`Error al actualizar el usuario: ${error.error.msg}`)

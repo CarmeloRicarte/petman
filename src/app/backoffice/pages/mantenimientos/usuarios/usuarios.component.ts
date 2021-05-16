@@ -104,7 +104,7 @@ export class UsuariosComponent implements OnInit {
       if (this.editarUsuarioForm.invalid) { // si el formulario no es correcto, para ejecucion
         return;
       }
-      this.usuarioService.actualizarUsuario(usuario).toPromise().then(
+      this.usuarioService.actualizarUsuario(usuario, 'usuarios').toPromise().then(
         (res) => {
           this.toastr.success(`Usuario ${res.usuario.nick} actualizado!`);
           this.ocultarUsuariosDialog(accion);
