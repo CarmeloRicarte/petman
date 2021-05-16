@@ -1,0 +1,221 @@
+<div class="p-grid">
+  <div class="p-col-12">
+    <div class="card">
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nuevo Usuario" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
+            (click)="crearCliente()"></button>
+          <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger p-mb-2"
+            (click)="eliminarClientesSeleccionados()"
+            [disabled]="!clientesSeleccionados || !clientesSeleccionados.length"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="clientes" [columns]="columnas" [rows]="10" [paginator]="true"
+        [rowsPerPageOptions]="[10,25,50]" [(selection)]="clientesSeleccionados" [rowHover]="true" dataKey="nombre"
+        styleClass="p-datatable-clientes"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} clientes"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+            <h5 class="p-m-0">Gestión de Clientes</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (keyup)="dt.filterGlobal(txtBuscar.value, 'contains')"
+                placeholder="Buscar..." #txtBuscar />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
+                field="{{columna.field}}"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cliente>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="cliente"></p-tableCheckbox>
+            </td>
+            <td><span class="p-column-title">Nombre</span>
+              {{cliente.nombre}}
+            </td>
+
+            <td><span class="p-column-title">Apellidos</span>
+              {{cliente.apellidos}}
+            </td>
+            <td><span class="p-column-title">Población</span>
+              {{cliente.poblacion}}
+            </td>
+            <td><span class="p-column-title">Dirección</span>
+              {{cliente.direccion}}
+            </td>
+            <td><span class="p-column-title">Teléfono</span>
+              {{cliente.telefono}}
+            </td>
+            <td><span class="p-column-title">Email</span>
+              {{cliente.email}}
+            </td>
+            <td><span class="p-column-title">DNI</span>
+              {{cliente.dni}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                (click)="editarCliente(cliente)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                (click)="eliminarCliente(cliente)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{clientes ? clientes.length : 0 }} clientes.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-dialog [(visible)]="clientesDialogCrear" [style]="{width: '450px'}" header="Crear Cliente" [modal]="true"
+      styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="crearClienteForm" (ngSubmit)="guardarCliente(crearClienteForm.value, 'crear')">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearClienteF.nombre.errors }" name="nombre"
+              autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearClienteF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+          <div class="p-field">
+            <label for="apellidos">Apellidos</label>
+            <input type="text" pInputText id="apellidos" formControlName="apellidos"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearClienteF.apellidos.errors }" name="apellidos" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearClienteF.apellidos.errors">Apellidos son
+              obligatorios.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="poblacion">Población</label>
+            <input type="text" pInputText id="poblacion" formControlName="poblacion"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearClienteF.poblacion.errors }" name="poblacion" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearClienteF.poblacion.errors">Población es
+              obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="direccion">Dirección</label>
+            <input type="text" pInputText id="direccion" formControlName="direccion"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearClienteF.direccion.errors }" name="direccion" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearClienteF.direccion.errors">Dirección es
+              obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" pInputText id="telefono" formControlName="telefono"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearClienteF.telefono.errors }" name="telefono" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearClienteF.telefono.errors">Teléfono es
+              obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="email">Email</label>
+            <input type="email" pInputText id="email" formControlName="email"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearClienteF.email.errors }" name="email" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearClienteF.email.errors">El formato del email no es
+              correcto.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="dni">DNI</label>
+            <input type="text" pInputText id="dni" formControlName="dni" name="dni" />
+          </div>
+
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarClientesDialog('crear')"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+
+    <p-dialog [(visible)]="clientesDialogEditar" [style]="{width: '450px'}" header="Editar Cliente" [modal]="true"
+      styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="editarClienteForm" (ngSubmit)="guardarCliente(cliente, 'editar')">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre" [(ngModel)]="cliente.nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarClienteF.nombre.errors }" name="nombre"
+              autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarClienteF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+          <div class="p-field">
+            <label for="apellidos">Apellidos</label>
+            <input type="text" pInputText id="apellidos" formControlName="apellidos" [(ngModel)]="cliente.apellidos"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarClienteF.apellidos.errors }"
+              name="apellidos" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarClienteF.apellidos.errors">Apellidos son
+              obligatorios.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="poblacion">Población</label>
+            <input type="text" pInputText id="poblacion" formControlName="poblacion" [(ngModel)]="cliente.poblacion"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarClienteF.poblacion.errors }"
+              name="poblacion" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarClienteF.poblacion.errors">Población es
+              obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="direccion">Dirección</label>
+            <input type="text" pInputText id="direccion" formControlName="direccion" [(ngModel)]="cliente.direccion"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarClienteF.direccion.errors }"
+              name="direccion" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarClienteF.direccion.errors">Dirección es
+              obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" pInputText id="telefono" formControlName="telefono" [(ngModel)]="cliente.telefono"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarClienteF.telefono.errors }" name="telefono" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarClienteF.telefono.errors">Teléfono es
+              obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="email">Email</label>
+            <input type="email" pInputText id="email" formControlName="email" [(ngModel)]="cliente.email"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarClienteF.email.errors }" name="email" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarClienteF.email.errors">El formato del email no es
+              correcto.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="dni">DNI</label>
+            <input type="text" pInputText id="dni" formControlName="dni" [(ngModel)]="cliente.dni" name="dni" />
+          </div>
+
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarClientesDialog('editar')"></button>
+            <button pButton pRipple type="submit" label="Actualizar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+  </div>
+</div>
