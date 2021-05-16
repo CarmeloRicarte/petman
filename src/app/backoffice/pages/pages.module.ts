@@ -18,6 +18,9 @@ import { PasswordModule } from 'primeng/password';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { ProveedoresComponent } from './proveedores/proveedores.component';
+
 
 // componentes
 import { PagesComponent } from './pages.component';
@@ -29,7 +32,9 @@ import { ConfirmationService } from 'primeng/api';
     PagesComponent,
     DashboardComponent,
     UsuariosComponent,
-    PerfilUsuarioComponent
+    PerfilUsuarioComponent,
+    ClientesComponent,
+    ProveedoresComponent
   ],
   imports: [
     PagesRoutingModule,

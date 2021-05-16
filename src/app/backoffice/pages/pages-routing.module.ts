@@ -8,6 +8,8 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { ProveedoresComponent } from './proveedores/proveedores.component';
 
 
 
@@ -22,6 +24,9 @@ const pagesRoutes: Routes = [
       // Inicio Rutas de administrador
       { path: 'usuarios', canActivate: [AdminGuard], component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
       // Fin Rutas de administrador
+      { path: 'clientes', component: ClientesComponent, data: { titulo: 'Clientes' } },
+      { path: 'proveedores', component: ProveedoresComponent, data: { titulo: 'Proveedores' } },
+
     ]
   },
 ];
