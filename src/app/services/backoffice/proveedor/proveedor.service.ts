@@ -1,24 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Proveedor } from '../../../models/backoffice/proveedor.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProveedorService {
   token = localStorage.getItem('tokenUsuario');
 
-  constructor(public http: HttpClient, private toastr: ToastrService) { }
+  constructor(public http: HttpClient, private toastr: ToastrService) {}
 
   get headers(): Object {
     return {
       headers: {
-        'x-token': this.token
-      }
-    }
+        'x-token': this.token,
+      },
+    };
   }
 
   /**
@@ -27,14 +28,12 @@ export class ProveedorService {
    */
   crearProveedor(proveedor: Proveedor) {
     const url = `${environment.urlServicios}/proveedores`;
-    return this.http.post(url, proveedor, this.headers)
-      .pipe(
-        map((resp: any) => {
-          this.toastr.success(`Proveedor ${resp.proveedor.nombre} creado!`);
-        }, (err: any) => {
-          this.toastr.error(`Error al crear el proveedor: ${err.error.msg}`);
-        })
-      );
+    return this.http.post(url, proveedor, this.headers).pipe(
+      map(
+        (resp: any) => resp,
+        (err: any) => err
+      )
+    );
   }
 
   /**
@@ -43,19 +42,21 @@ export class ProveedorService {
    */
   actualizarProveedor(proveedor: Proveedor) {
     const url = `${environment.urlServicios}/proveedores/${proveedor.uid}?token=${this.token}`;
-    return this.http.put(url, proveedor, this.headers)
-      .pipe(
-        map((resp: any) => {
+    return this.http.put(url, proveedor, this.headers).pipe(
+      map(
+        (resp: any) => {
           return resp;
-        }, (err: any) => {
+        },
+        (err: any) => {
           return err;
-        })
-      );
+        }
+      )
+    );
   }
 
   /**
-    * Funcion para obtener los proveedores
-    */
+   * Funcion para obtener los proveedores
+   */
   obtenerProveedores() {
     const url = `${environment.urlServicios}/proveedores`;
     return this.http.get(url, this.headers);
@@ -72,15 +73,16 @@ export class ProveedorService {
    */
   eliminarProveedor(proveedor: Proveedor) {
     const url = `${environment.urlServicios}/proveedores/${proveedor.uid}`;
-    return this.http.delete(url, this.headers)
-      .pipe(
-        map((resp: any) => {
+    return this.http.delete(url, this.headers).pipe(
+      map(
+        (resp: any) => {
           return resp;
-        }, (err: any) => {
+        },
+        (err: any) => {
           return err;
-        })
-      );
-
+        }
+      )
+    );
   }
 
   /**
@@ -89,13 +91,15 @@ export class ProveedorService {
    */
   eliminarProveedores(proveedores: any[]) {
     const url = `${environment.urlServicios}/proveedores/deleteSelected`;
-    return this.http.post(url, proveedores, this.headers)
-      .pipe(
-        map((resp: any) => {
+    return this.http.post(url, proveedores, this.headers).pipe(
+      map(
+        (resp: any) => {
           return resp;
-        }, (err: any) => {
+        },
+        (err: any) => {
           return err;
-        })
-      );
+        }
+      )
+    );
   }
 }

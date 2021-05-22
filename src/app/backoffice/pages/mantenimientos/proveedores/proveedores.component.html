@@ -1,0 +1,243 @@
+<div class="p-grid">
+  <div class="p-col-12">
+    <div class="card">
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nuevo Usuario" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
+            (click)="crearProveedor()"></button>
+          <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger p-mb-2"
+            (click)="eliminarProveedoresSeleccionados()" [disabled]="!proveedores || !proveedores.length"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="proveedores" [columns]="columnas" [rows]="10" [paginator]="true"
+        [rowsPerPageOptions]="[10,25,50]" [(selection)]="proveedoresSeleccionados" [rowHover]="true" dataKey="nombre"
+        styleClass="p-datatable-proveedores"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} proveedores"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+            <h5 class="p-m-0">Gestión de Proveedores</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (keyup)="dt.filterGlobal(txtBuscar.value, 'contains')"
+                placeholder="Buscar..." #txtBuscar />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
+                field="{{columna.field}}"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-proveedor>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="proveedor"></p-tableCheckbox>
+            </td>
+            <td><span class="p-column-title">Nombre</span>
+              {{proveedor.nombre}}
+            </td>
+
+            <td><span class="p-column-title">Categoría</span>
+              {{proveedor.categoria}}
+            </td>
+            <td><span class="p-column-title">Población</span>
+              {{proveedor.poblacion}}
+            </td>
+            <td><span class="p-column-title">Dirección</span>
+              {{proveedor.direccion}}
+            </td>
+            <td><span class="p-column-title">Teléfono</span>
+              {{proveedor.telefono}}
+            </td>
+            <td><span class="p-column-title">CIF</span>
+              {{proveedor.cif}}
+            </td>
+            <td><span class="p-column-title">Email</span>
+              {{proveedor.email}}
+            </td>
+            <td><span class="p-column-title">Web</span>
+              {{proveedor.web}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                (click)="editarProveedor(proveedor)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                (click)="eliminarProveedor(proveedor)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{proveedores ? proveedores.length : 0 }} proveedores.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-dialog [(visible)]="proveedoresDialogCrear" [style]="{width: '450px'}" header="Crear Proveedor" [modal]="true"
+      styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="crearProveedorForm" (ngSubmit)="guardarProveedor(crearProveedorForm.value, 'crear')">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProveedorF.nombre.errors }" name="nombre"
+              autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProveedorF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+          <div class="p-field">
+            <label for="categoria">Categoría</label>
+            <input type="text" pInputText id="categoria" formControlName="categoria"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProveedorF.categoria.errors }"
+              name="categoria" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProveedorF.categoria.errors">Categoría es
+              obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="poblacion">Población</label>
+            <input type="text" pInputText id="poblacion" formControlName="poblacion"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProveedorF.poblacion.errors }"
+              name="poblacion" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProveedorF.poblacion.errors">Población es
+              obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="direccion">Dirección</label>
+            <input type="text" pInputText id="direccion" formControlName="direccion"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProveedorF.direccion.errors }"
+              name="direccion" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProveedorF.direccion.errors">Dirección es
+              obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" pInputText id="telefono" formControlName="telefono"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProveedorF.telefono.errors }" name="telefono" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProveedorF.telefono.errors">Teléfono es
+              obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="cif">CIF</label>
+            <input type="text" pInputText id="cif" formControlName="cif" name="cif"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProveedorF.cif.errors }" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProveedorF.cif.errors">CIF es
+              obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="email">Email</label>
+            <input type="email" pInputText id="email" formControlName="email"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProveedorF.email.errors }" name="email" />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProveedorF.email.errors">El formato del email no es
+              correcto.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="web">Web</label>
+            <input type="text" pInputText id="web" formControlName="web" name="web" />
+          </div>
+
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarProveedoresDialog('crear')"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+
+    <p-dialog [(visible)]="proveedoresDialogEditar" [style]="{width: '450px'}" header="Editar Proveedor" [modal]="true"
+      styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="editarProveedorForm" (ngSubmit)="guardarProveedor(proveedor, 'editar')">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre" [(ngModel)]="proveedor.nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProveedorF.nombre.errors }" name="nombre"
+              autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProveedorF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+          <div class="p-field">
+            <label for="categoria">Categoría</label>
+            <input type="text" pInputText id="categoria" formControlName="categoria" [(ngModel)]="proveedor.categoria"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProveedorF.categoria.errors }"
+              name="categoria" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProveedorF.categoria.errors">Categoría es
+              obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="poblacion">Población</label>
+            <input type="text" pInputText id="poblacion" formControlName="poblacion" [(ngModel)]="proveedor.poblacion"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProveedorF.poblacion.errors }"
+              name="poblacion" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProveedorF.poblacion.errors">Población es
+              obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="direccion">Dirección</label>
+            <input type="text" pInputText id="direccion" formControlName="direccion" [(ngModel)]="proveedor.direccion"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProveedorF.direccion.errors }"
+              name="direccion" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProveedorF.direccion.errors">Dirección es
+              obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" pInputText id="telefono" formControlName="telefono" [(ngModel)]="proveedor.telefono"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProveedorF.telefono.errors }"
+              name="telefono" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProveedorF.telefono.errors">Teléfono es
+              obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="cif">CIF</label>
+            <input type="text" pInputText id="cif" formControlName="cif" [(ngModel)]="proveedor.cif" name="cif"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProveedorF.cif.errors }" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProveedorF.cif.errors">CIF es
+              obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="email">Email</label>
+            <input type="email" pInputText id="email" formControlName="email" [(ngModel)]="proveedor.email"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProveedorF.email.errors }" name="email" />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProveedorF.email.errors">El formato del email no es
+              correcto.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="web">Web</label>
+            <input type="text" pInputText id="web" formControlName="web" [(ngModel)]="proveedor.web" name="web" />
+          </div>
+
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarProveedoresDialog('editar')"></button>
+            <button pButton pRipple type="submit" label="Actualizar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+  </div>
+</div>
