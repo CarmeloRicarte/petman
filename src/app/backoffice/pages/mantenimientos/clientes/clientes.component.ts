@@ -1,29 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 
 import { Cliente } from 'src/app/models/backoffice/cliente.model';
 import { ClienteService } from 'src/app/services/service.index';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.scss'],
-  styles: [`
-        @media screen and (max-width: 960px) {
-            :host ::ng-deep .p-datatable.p-datatable-clientes.p-datatable-tbody > tr > td:last-child {
-                text-align: center;
-            }
-
-            :host ::ng-deep .p-datatable.p-datatable-clientes .p-datatable-tbody > tr > td:nth-child(6) {
-                display: flex;
-            }
+  styles: [
+    `
+      @media screen and (max-width: 960px) {
+        :host
+          ::ng-deep
+          .p-datatable.p-datatable-clientes.p-datatable-tbody
+          > tr
+          > td:last-child {
+          text-align: center;
         }
-  `],
+
+        :host
+          ::ng-deep
+          .p-datatable.p-datatable-clientes
+          .p-datatable-tbody
+          > tr
+          > td:nth-child(6) {
+          display: flex;
+        }
+      }
+    `,
+  ],
 })
-export class ClientesComponent implements OnInit {
+export class ClientesComponent implements OnInit, OnDestroy {
   clientes: Cliente[] = [];
   cliente!: Cliente;
 
@@ -39,7 +56,13 @@ export class ClientesComponent implements OnInit {
   columnas: any[] = [];
   totalClientes = 0;
 
-  constructor(private clienteService: ClienteService, private fb: FormBuilder, private toastr: ToastrService) { }
+  subscription: Subscription = new Subscription();
+
+  constructor(
+    private clienteService: ClienteService,
+    private fb: FormBuilder,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.cargarClientes();
@@ -50,8 +73,7 @@ export class ClientesComponent implements OnInit {
       { field: 'direccion', header: 'Dirección' },
       { field: 'telefono', header: 'Teléfono' },
       { field: 'email', header: 'Email' },
-      { field: 'dni', header: 'DNI' }
-
+      { field: 'dni', header: 'DNI' },
     ];
     this.crearClienteForm = this.fb.group({
       nombre: new FormControl('', Validators.required),
@@ -59,16 +81,17 @@ export class ClientesComponent implements OnInit {
       poblacion: new FormControl('', Validators.required),
       direccion: new FormControl('', Validators.required),
       telefono: new FormControl('', [
-        Validators.required, Validators.pattern('^[0-9]*$'),
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
         Validators.maxLength(9),
-        Validators.minLength(9)]
-      ),
+        Validators.minLength(9),
+      ]),
       email: new FormControl('', Validators.email),
       dni: new FormControl('', [
         Validators.maxLength(9),
-        Validators.minLength(9)
-      ])
-    })
+        Validators.minLength(9),
+      ]),
+    });
 
     this.editarClienteForm = this.fb.group({
       nombre: new FormControl('', Validators.required),
@@ -76,16 +99,21 @@ export class ClientesComponent implements OnInit {
       poblacion: new FormControl('', Validators.required),
       direccion: new FormControl('', Validators.required),
       telefono: new FormControl('', [
-        Validators.required, Validators.pattern('^[0-9]*$'),
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
         Validators.maxLength(9),
-        Validators.minLength(9)]
-      ),
+        Validators.minLength(9),
+      ]),
       email: new FormControl('', Validators.email),
       dni: new FormControl('', [
         Validators.maxLength(9),
-        Validators.minLength(9)
-      ])
-    })
+        Validators.minLength(9),
+      ]),
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   get crearClienteF() {
@@ -97,16 +125,18 @@ export class ClientesComponent implements OnInit {
   }
 
   /**
-     * metodo para obtener los clientes
-     */
+   * metodo para obtener los clientes
+   */
   cargarClientes() {
-    this.clienteService.obtenerClientes()
-      .subscribe((res: any) => {
+    this.clienteService.obtenerClientes().subscribe(
+      (res: any) => {
         this.clientes = res.clientes;
         this.totalClientes = res.total;
-      }, (err) => {
+      },
+      (err) => {
         console.log(err);
-      })
+      }
+    );
   }
 
   crearCliente() {
@@ -124,42 +154,51 @@ export class ClientesComponent implements OnInit {
   guardarCliente(cliente: any, accion: 'crear' | 'editar'): void {
     this.pulsadoSubmit = true;
     if (accion === 'editar') {
-      if (this.editarClienteForm.invalid) { // si el formulario no es correcto, para ejecucion
+      if (this.editarClienteForm.invalid) {
+        // si el formulario no es correcto, para ejecucion
         return;
       }
-      this.clienteService.actualizarCliente(cliente).toPromise().then(
+      this.clienteService.actualizarCliente(cliente).subscribe(
         (res: any) => {
-          this.toastr.success(`Cliente ${res.cliente.nombre} ${res.cliente.apellidos} actualizado!`);
+          this.toastr.success(
+            `Cliente ${res.cliente.nombre} ${res.cliente.apellidos} actualizado!`
+          );
           this.ocultarClientesDialog(accion);
           this.cargarClientes();
-        }, (err: any) => {
+        },
+        (err: any) => {
           console.log(err);
+          this.toastr.error(`Error al actualizar el cliente: ${err.error.msg}`);
           this.ocultarClientesDialog(accion);
           this.cargarClientes();
-          this.toastr.error(`Error al actualizar el cliente: ${err.error.msg}`);
         }
-      )
+      );
     } else {
-      if (this.crearClienteForm.invalid) { // si el formulario no es correcto, para ejecucion
+      if (this.crearClienteForm.invalid) {
+        // si el formulario no es correcto, para ejecucion
         return;
       }
-      this.clienteService.crearCliente(cliente).toPromise().then(
-        () => {
+      this.clienteService.crearCliente(cliente).subscribe(
+        (res: any) => {
+          this.toastr.success(
+            `Cliente ${res.cliente.nombre} ${res.cliente.apellidos} creado!`
+          );
           this.ocultarClientesDialog(accion);
           this.cargarClientes();
-        }, () => {
+        },
+        (err: any) => {
+          this.toastr.error(`Error al crear el cliente: ${err.error.msg}`);
           this.ocultarClientesDialog(accion);
           this.cargarClientes();
         }
-      )
+      );
     }
-
   }
 
   /**
-     * Metodo que llama al servicio para eliminar un cliente
-     * @param cliente cliente a eliminar
-     */
+   * Metodo que llama al servicio para eliminar un cliente
+   * @param cliente cliente a eliminar
+   */
   eliminarCliente(cliente: Cliente) {
     Swal.fire({
       title: '¿Borrar cliente?',
@@ -169,20 +208,22 @@ export class ClientesComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, borrarlo!'
+      confirmButtonText: 'Si, borrarlo!',
     }).then((result: any) => {
       if (result.value) {
-        this.clienteService.eliminarCliente(cliente)
-          .subscribe(() => {
+        this.clienteService.eliminarCliente(cliente).subscribe(
+          () => {
             Swal.fire(
               'Eliminado!',
               `${cliente.nombre} ${cliente.apellidos} fue eliminado correctamente`,
               'success'
             );
             this.cargarClientes();
-          }, (err: any) => {
+          },
+          (err: any) => {
             console.error(err);
-          });
+          }
+        );
       }
     });
   }
@@ -196,20 +237,20 @@ export class ClientesComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, borrarlos!'
+      confirmButtonText: 'Si, borrarlos!',
     }).then((result: any) => {
       if (result.value) {
-        this.clienteService.eliminarClientes(this.clientesSeleccionados)
-          .subscribe((res) => {
-            Swal.fire(
-              'Eliminados!',
-              `${res.msg}`,
-              'success'
-            );
-            this.cargarClientes();
-          }, (err: any) => {
-            console.error(err);
-          });
+        this.clienteService
+          .eliminarClientes(this.clientesSeleccionados)
+          .subscribe(
+            (res) => {
+              Swal.fire('Eliminados!', `${res.msg}`, 'success');
+              this.cargarClientes();
+            },
+            (err: any) => {
+              console.error(err);
+            }
+          );
       }
     });
   }

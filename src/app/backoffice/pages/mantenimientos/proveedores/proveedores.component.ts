@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -6,6 +6,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { Proveedor } from 'src/app/models/backoffice/proveedor.model';
 import { ProveedorService } from 'src/app/services/service.index';
 import Swal from 'sweetalert2';
@@ -37,7 +38,7 @@ import Swal from 'sweetalert2';
     `,
   ],
 })
-export class ProveedoresComponent implements OnInit {
+export class ProveedoresComponent implements OnInit, OnDestroy {
   proveedores: Proveedor[] = [];
   proveedor!: Proveedor;
 
@@ -52,6 +53,8 @@ export class ProveedoresComponent implements OnInit {
   pulsadoSubmit!: boolean;
   columnas: any[] = [];
   totalProveedores = 0;
+
+  subscription: Subscription = new Subscription();
 
   constructor(
     private proveedorService: ProveedorService,
@@ -112,6 +115,9 @@ export class ProveedoresComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
   get crearProveedorF() {
     return this.crearProveedorForm.controls;
   }
