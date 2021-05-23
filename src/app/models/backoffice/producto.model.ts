@@ -5,6 +5,7 @@ export interface Producto {
   proveedor: string;
   precio: number;
   cantidad: number;
+  peso: number;
   unidadMedida: string;
   uid?: string;
 }

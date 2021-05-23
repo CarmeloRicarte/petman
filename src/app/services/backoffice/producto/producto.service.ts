@@ -55,7 +55,7 @@ export class ProductoService {
   /**
    * Funcion para obtener los productos
    */
-  obtenerProductoes() {
+  obtenerProductos() {
     const url = `${environment.urlServicios}/productos`;
     return this.http.get(url, this.headers);
   }

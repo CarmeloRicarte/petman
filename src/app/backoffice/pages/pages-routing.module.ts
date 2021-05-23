@@ -12,6 +12,7 @@ import { ClientesComponent } from './mantenimientos/clientes/clientes.component'
 import { ProveedoresComponent } from './mantenimientos/proveedores/proveedores.component';
 import { CategoriasComponent } from './mantenimientos/categorias/categorias.component';
 import { SubcategoriasComponent } from './mantenimientos/subcategorias/subcategorias.component';
+import { ProductosComponent } from './mantenimientos/productos/productos.component';
 
 const pagesRoutes: Routes = [
   {
@@ -56,6 +57,11 @@ const pagesRoutes: Routes = [
         path: 'subcategorias',
         component: SubcategoriasComponent,
         data: { titulo: 'Subcategorías' },
+      },
+      {
+        path: 'productos',
+        component: ProductosComponent,
+        data: { titulo: 'Productos' },
       },
     ],
   },

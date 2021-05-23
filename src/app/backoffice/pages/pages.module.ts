@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import '@angular/common/locales/global/es';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PagesRoutingModule } from './pages-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -13,6 +14,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { PasswordModule } from 'primeng/password';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 // paginas
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
@@ -56,7 +58,8 @@ import { ConfirmationService } from 'primeng/api';
     RadioButtonModule,
     PasswordModule,
     DropdownModule,
+    InputNumberModule,
   ],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, { provide: LOCALE_ID, useValue: 'es' }],
 })
 export class PagesModule {}

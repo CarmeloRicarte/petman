@@ -1,0 +1,281 @@
+<div class="p-grid">
+  <div class="p-col-12">
+    <div class="card">
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nuevo Producto" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
+            (click)="crearProducto()"></button>
+          <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger p-mb-2"
+            (click)="eliminarProductosSeleccionados()" [disabled]="!productos || !productos.length"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="productos" [columns]="columnas" [rows]="10" [paginator]="true"
+        [rowsPerPageOptions]="[10,25,50]" [(selection)]="productosSeleccionados" [rowHover]="true" dataKey="nombre"
+        styleClass="p-datatable-productos"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} productos"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+            <h5 class="p-m-0">Gestión de Productos</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (keyup)="dt.filterGlobal(txtBuscar.value, 'contains')"
+                placeholder="Buscar..." #txtBuscar />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
+                field="{{columna.field}}"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-producto>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="producto"></p-tableCheckbox>
+            </td>
+            <td><span class="p-column-title">Nombre</span>
+              {{producto.nombre}}
+            </td>
+            <td><span class="p-column-title">Precio</span>
+              {{producto.precio | currency:'EUR'}}
+            </td>
+            <td><span class="p-column-title">Cantidad</span>
+              {{producto.cantidad}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                (click)="editarProducto(producto)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                (click)="eliminarProducto(producto)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{productos ? productos.length : 0 }} productos.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-dialog [(visible)]="productosDialogCrear" [style]="{width: '450px'}" header="Crear Producto" [modal]="true"
+      styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="crearProductoForm" (ngSubmit)="guardarProducto(crearProductoForm.value, 'crear')">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProductoF.nombre.errors }" name="nombre"
+              autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProductoF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="categoria">Categoría asociada</label>
+            <p-dropdown [options]="categorias" formControlName="categoria" optionLabel="nombre" optionValue="uid"
+              [showClear]="true"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProductoF.categoria.errors }">
+              <ng-template let-categoria>
+                <div>
+                  <div>{{categoria.nombre}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProductoF.categoria.errors">Categoría
+              es obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="subcategoria">Subcategoría asociada</label>
+            <p-dropdown [options]="subcategorias" formControlName="subcategoria" optionLabel="nombre" optionValue="uid"
+              [showClear]="true"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProductoF.subcategoria.errors }">
+              <ng-template let-subcategoria>
+                <div>
+                  <div>{{subcategoria.nombre}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProductoF.subcategoria.errors">Subcategoría
+              es obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="proveedor">Proveedor</label>
+            <p-dropdown [options]="proveedores" formControlName="proveedor" optionLabel="nombre" optionValue="uid"
+              [showClear]="true"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProductoF.proveedor.errors }">
+              <ng-template let-proveedor>
+                <div>
+                  <div>{{proveedor.nombre}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProductoF.proveedor.errors">Proveedor es
+              obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="precio">Precio</label>
+            <p-inputNumber id="precio" formControlName="precio" mode="currency" currency="EUR" locale="es-ES"
+              [minFractionDigits]="2" [maxFractionDigits]="2"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProductoF.precio.errors }" name="precio"
+              autofocus></p-inputNumber>
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProductoF.precio.errors">Precio
+              es obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="cantidad">Cantidad</label>
+            <p-inputNumber id="cantidad" formControlName="cantidad"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProductoF.cantidad.errors }" name="cantidad"
+              autofocus></p-inputNumber>
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProductoF.cantidad.errors">Cantidad
+              es obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="peso">Peso</label>
+            <p-inputNumber id="peso" formControlName="peso"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProductoF.peso.errors }" name="peso" autofocus>
+            </p-inputNumber>
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProductoF.peso.errors">Peso
+              es obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="unidadMedida">Unidad de medida</label>
+            <input type="text" pInputText id="unidadMedida" formControlName="unidadMedida"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProductoF.unidadMedida.errors }"
+              name="unidadMedida" autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProductoF.unidadMedida.errors">Unidad de medida
+              es obligatoria.</small>
+          </div>
+
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarProductosDialog('crear')"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+
+    <p-dialog [(visible)]="productosDialogEditar" [style]="{width: '400px'}" header="Editar Producto" [modal]="true"
+      styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="editarProductoForm" (ngSubmit)="guardarProducto(producto, 'editar')">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre" [(ngModel)]="producto.nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProductoF.nombre.errors }" name="nombre"
+              autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProductoF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="categoria">Categoría asociada</label>
+            <p-dropdown [options]="categorias" formControlName="categoria" [(ngModel)]="producto.categoria"
+              optionLabel="nombre" optionValue="uid" [showClear]="true"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProductoF.categoria.errors }">
+              <ng-template let-categoria>
+                <div>
+                  <div>{{categoria.nombre}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProductoF.categoria.errors">Categoría
+              es obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="subcategoria">Subcategoría asociada</label>
+            <p-dropdown [options]="subcategorias" formControlName="subcategoria" [(ngModel)]="producto.subcategoria"
+              optionLabel="nombre" optionValue="uid" [showClear]="true"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProductoF.subcategoria.errors }">
+              <ng-template let-subcategoria>
+                <div>
+                  <div>{{subcategoria.nombre}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProductoF.subcategoria.errors">Subcategoría
+              es obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="proveedor">Proveedor</label>
+            <p-dropdown [options]="proveedores" formControlName="proveedor" [(ngModel)]="producto.proveedor"
+              optionLabel="nombre" optionValue="uid" [showClear]="true"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProductoF.proveedor.errors }">
+              <ng-template let-proveedor>
+                <div>
+                  <div>{{proveedor.nombre}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProductoF.proveedor.errors">Proveedor
+              es obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="precio">Precio</label>
+            <p-inputNumber id="precio" formControlName="precio" [(ngModel)]="producto.precio" mode="currency"
+              currency="EUR" locale="es-ES" [minFractionDigits]="2" [maxFractionDigits]="2"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProductoF.precio.errors }" name="precio"
+              autofocus></p-inputNumber>
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProductoF.precio.errors">Precio
+              es obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="cantidad">Cantidad</label>
+            <p-inputNumber id="cantidad" formControlName="cantidad" [(ngModel)]="producto.cantidad"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProductoF.cantidad.errors }" name="cantidad"
+              autofocus></p-inputNumber>
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProductoF.cantidad.errors">Cantidad
+              es obligatoria.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="peso">Peso</label>
+            <p-inputNumber id="peso" formControlName="peso" [(ngModel)]="producto.peso"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProductoF.peso.errors }" name="peso" autofocus>
+            </p-inputNumber>
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProductoF.peso.errors">Peso
+              es obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="unidadMedida">Unidad de medida</label>
+            <input type="text" pInputText id="unidadMedida" formControlName="unidadMedida"
+              [(ngModel)]="producto.unidadMedida"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProductoF.unidadMedida.errors }"
+              name="unidadMedida" autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProductoF.unidadMedida.errors">Unidad de medida
+              es obligatoria.</small>
+          </div>
+
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarProductosDialog('editar')"></button>
+            <button pButton pRipple type="submit" label="Actualizar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog></p-confirmDialog>
+  </div>
+</div>
