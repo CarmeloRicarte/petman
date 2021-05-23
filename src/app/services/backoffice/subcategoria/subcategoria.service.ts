@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class SubsubcategoriaService {
+export class SubcategoriaService {
   token = localStorage.getItem('tokenUsuario');
 
   constructor(public http: HttpClient) {}
