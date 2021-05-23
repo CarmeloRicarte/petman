@@ -189,7 +189,7 @@ export class CategoriasComponent implements OnInit, OnDestroy {
 
   eliminarCategoriasSeleccionadas() {
     Swal.fire({
-      title: '¿Borrar categorías seleccionados?',
+      title: '¿Borrar categorías seleccionadas?',
       text: `Está a punto de borrar a ${this.categoriasSeleccionadas.length} categorías, está seguro?`,
       icon: 'warning',
       showCancelButton: true,
