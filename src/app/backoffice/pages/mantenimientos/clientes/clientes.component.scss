@@ -49,7 +49,7 @@
 @media screen and (max-width: 960px) {
   :host ::ng-deep {
     .p-datatable {
-      &.p-datatable-users {
+      &.p-datatable-clientes {
         .p-datatable-thead > tr > th,
         .p-datatable-tfoot > tr > td {
           display: none !important;
@@ -73,10 +73,6 @@
               display: inline-block;
               margin: -0.4rem 1rem -0.4rem -0.4rem;
               font-weight: bold;
-            }
-
-            .p-progressbar {
-              margin-top: 0.5rem;
             }
           }
         }
