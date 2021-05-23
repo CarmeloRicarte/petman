@@ -47,7 +47,7 @@ export class SubcategoriasComponent implements OnInit, OnDestroy {
   subcategoria!: Subcategoria;
 
   categorias: Categoria[] = [];
-  categoriaSeleccionada!: Categoria;
+
   subcategoriasDialogCrear!: boolean;
   crearSubcategoriaForm!: FormGroup;
 
@@ -221,7 +221,7 @@ export class SubcategoriasComponent implements OnInit, OnDestroy {
 
   eliminarSubcategoriasSeleccionadas() {
     Swal.fire({
-      title: '¿Borrar subcategorías seleccionados?',
+      title: '¿Borrar subcategorías seleccionadas?',
       text: `Está a punto de borrar a ${this.subcategoriasSeleccionadas.length} subcategorías, está seguro?`,
       icon: 'warning',
       showCancelButton: true,
