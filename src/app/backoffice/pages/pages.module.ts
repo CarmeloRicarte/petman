@@ -12,6 +12,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { PasswordModule } from 'primeng/password';
+import { DropdownModule } from 'primeng/dropdown';
 
 // paginas
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
@@ -54,6 +55,7 @@ import { ConfirmationService } from 'primeng/api';
     ConfirmDialogModule,
     RadioButtonModule,
     PasswordModule,
+    DropdownModule,
   ],
   providers: [ConfirmationService],
 })

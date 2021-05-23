@@ -1,0 +1,141 @@
+<div class="p-grid">
+  <div class="p-col-12">
+    <div class="card">
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nueva Subcategoría" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
+            (click)="crearSubcategoria()"></button>
+          <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger p-mb-2"
+            (click)="eliminarSubcategoriasSeleccionadas()"
+            [disabled]="!subcategorias || !subcategorias.length"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="subcategorias" [columns]="columnas" [rows]="5" [paginator]="true"
+        [rowsPerPageOptions]="[5,10,20]" [(selection)]="subcategoriasSeleccionadas" [rowHover]="true" dataKey="nombre"
+        styleClass="p-datatable-subcategorias"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} subcategorías"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+            <h5 class="p-m-0">Gestión de Subcategorías</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (keyup)="dt.filterGlobal(txtBuscar.value, 'contains')"
+                placeholder="Buscar..." #txtBuscar />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
+                field="{{columna.field}}"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-subcategoria>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="subcategoria"></p-tableCheckbox>
+            </td>
+            <td><span class="p-column-title">Nombre</span>
+              {{subcategoria.nombre}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                (click)="editarSubcategoria(subcategoria)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                (click)="eliminarSubcategoria(subcategoria)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{subcategorias ? subcategorias.length : 0 }} subcategorías.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-dialog [(visible)]="subcategoriasDialogCrear" [style]="{width: '450px'}" header="Crear Subcategoría"
+      [modal]="true" styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="crearSubcategoriaForm"
+          (ngSubmit)="guardarSubcategoria(crearSubcategoriaForm.value, 'crear')">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearSubcategoriaF.nombre.errors }" name="nombre"
+              autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearSubcategoriaF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+
+          <div class="p-field">
+            <label for="categoria">Categoría asociada</label>
+            <p-dropdown [options]="categorias" formControlName="categoria" optionLabel="nombre" optionValue="uid"
+              [showClear]="true"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearSubcategoriaF.categoria.errors }">
+              <ng-template let-categoria>
+                <div>
+                  <div>{{categoria.nombre}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <small class="p-error" *ngIf="pulsadoSubmit && crearSubcategoriaF.categoria.errors">Categoría
+              es obligatoria.</small>
+          </div>
+
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarSubcategoriasDialog('crear')"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+
+    <p-dialog [(visible)]="subcategoriasDialogEditar" [style]="{width: '400px'}" header="Editar Subcategoría"
+      [modal]="true" styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="editarSubcategoriaForm" (ngSubmit)="guardarSubcategoria(subcategoria, 'editar')">
+          <div class="p-field">
+            <label for="categoria">Categoría asociada</label>
+            <p-dropdown [options]="categorias" formControlName="categoria" [(ngModel)]="subcategoria.categoria"
+              optionLabel="nombre" optionValue="uid" [showClear]="true"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarSubcategoriaF.categoria.errors }">
+              <ng-template let-categoria>
+                <div>
+                  <div>{{categoria.nombre}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <small class="p-error" *ngIf="pulsadoSubmit && editarSubcategoriaF.categoria.errors">Categoría
+              es obligatoria.</small>
+          </div>
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre" [(ngModel)]="subcategoria.nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarSubcategoriaF.nombre.errors }" name="nombre"
+              autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarSubcategoriaF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarSubcategoriasDialog('editar')"></button>
+            <button pButton pRipple type="submit" label="Actualizar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog></p-confirmDialog>
+  </div>
+</div>

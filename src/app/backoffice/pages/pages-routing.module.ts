@@ -11,6 +11,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 import { ClientesComponent } from './mantenimientos/clientes/clientes.component';
 import { ProveedoresComponent } from './mantenimientos/proveedores/proveedores.component';
 import { CategoriasComponent } from './mantenimientos/categorias/categorias.component';
+import { SubcategoriasComponent } from './mantenimientos/subcategorias/subcategorias.component';
 
 const pagesRoutes: Routes = [
   {
@@ -50,6 +51,11 @@ const pagesRoutes: Routes = [
         path: 'categorias',
         component: CategoriasComponent,
         data: { titulo: 'Categorías' },
+      },
+      {
+        path: 'subcategorias',
+        component: SubcategoriasComponent,
+        data: { titulo: 'Subcategorías' },
       },
     ],
   },
