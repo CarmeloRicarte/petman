@@ -121,7 +121,7 @@ export class CategoriasComponent implements OnInit, OnDestroy {
       }
       this.categoriaService.actualizarCategoria(categoria).subscribe(
         (res: any) => {
-          this.toastr.success(`Categoria ${res.categoria.nombre} actualizada!`);
+          this.toastr.success(`Categoría ${res.categoria.nombre} actualizada!`);
           this.ocultarCategoriasDialog(accion);
           this.cargarCategorias();
         },
@@ -130,7 +130,7 @@ export class CategoriasComponent implements OnInit, OnDestroy {
           this.ocultarCategoriasDialog(accion);
           this.cargarCategorias();
           this.toastr.error(
-            `Error al actualizar la categoria: ${err.error.msg}`
+            `Error al actualizar la categoría: ${err.error.msg}`
           );
         }
       );
@@ -141,12 +141,12 @@ export class CategoriasComponent implements OnInit, OnDestroy {
       }
       this.categoriaService.crearCategoria(categoria).subscribe(
         (res: any) => {
-          this.toastr.success(`Categoria ${res.categoria.nombre} creada!`);
+          this.toastr.success(`Categoría ${res.categoria.nombre} creada!`);
           this.ocultarCategoriasDialog(accion);
           this.cargarCategorias();
         },
         (err: any) => {
-          this.toastr.error(`Error al crear la categoria: ${err.error.msg}`);
+          this.toastr.error(`Error al crear la categoría: ${err.error.msg}`);
           this.ocultarCategoriasDialog(accion);
           this.cargarCategorias();
         }
@@ -202,7 +202,7 @@ export class CategoriasComponent implements OnInit, OnDestroy {
         this.categoriaService
           .eliminarCategorias(this.categoriasSeleccionadas)
           .subscribe(
-            (res) => {
+            (res: any) => {
               Swal.fire('Eliminadas!', `${res.msg}`, 'success');
               this.cargarCategorias();
             },
