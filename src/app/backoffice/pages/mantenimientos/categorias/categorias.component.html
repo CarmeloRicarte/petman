@@ -5,8 +5,9 @@
         <ng-template pTemplate="left">
           <button pButton pRipple label="Nueva Categoría" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
             (click)="crearCategoria()"></button>
-          <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger p-mb-2"
-            (click)="eliminarCategoriasSeleccionadas()" [disabled]="!categorias || !categorias.length"></button>
+          <button pButton *ngIf="usuarioService.role === 'ADMIN_ROLE'" pRipple label="Borrar" icon="pi pi-trash"
+            class="p-button-danger p-mb-2" (click)="eliminarCategoriasSeleccionadas()"
+            [disabled]="!categorias || !categorias.length"></button>
         </ng-template>
       </p-toolbar>
 
@@ -47,8 +48,8 @@
             <td>
               <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
                 (click)="editarCategoria(categoria)"></button>
-              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                (click)="eliminarCategoria(categoria)"></button>
+              <button pButton *ngIf="usuarioService.role === 'ADMIN_ROLE'" pRipple icon="pi pi-trash"
+                class="p-button-rounded p-button-warning" (click)="eliminarCategoria(categoria)"></button>
             </td>
           </tr>
         </ng-template>

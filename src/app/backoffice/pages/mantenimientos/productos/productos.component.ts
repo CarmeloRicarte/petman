@@ -14,6 +14,7 @@ import {
   ProductoService,
   ProveedorService,
   SubcategoriaService,
+  UsuarioService,
 } from 'src/app/services/service.index';
 import { Categoria } from 'src/app/models/backoffice/categoria.model';
 import { Producto } from 'src/app/models/backoffice/producto.model';
@@ -73,6 +74,7 @@ export class ProductosComponent implements OnInit, OnDestroy {
     private subcategoriaService: SubcategoriaService,
     private categoriaService: CategoriaService,
     private proveedorService: ProveedorService,
+    public usuarioService: UsuarioService,
     private fb: FormBuilder,
     private toastr: ToastrService
   ) {}

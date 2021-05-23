@@ -5,8 +5,9 @@
         <ng-template pTemplate="left">
           <button pButton pRipple label="Nuevo Producto" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
             (click)="crearProducto()"></button>
-          <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger p-mb-2"
-            (click)="eliminarProductosSeleccionados()" [disabled]="!productos || !productos.length"></button>
+          <button pButton *ngIf="usuarioService.role === 'ADMIN_ROLE'" pRipple label="Borrar" icon="pi pi-trash"
+            class="p-button-danger p-mb-2" (click)="eliminarProductosSeleccionados()"
+            [disabled]="!productos || !productos.length"></button>
         </ng-template>
       </p-toolbar>
 
@@ -53,8 +54,8 @@
             <td>
               <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
                 (click)="editarProducto(producto)"></button>
-              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                (click)="eliminarProducto(producto)"></button>
+              <button pButton *ngIf="usuarioService.role === 'ADMIN_ROLE'" pRipple icon="pi pi-trash"
+                class="p-button-rounded p-button-warning" (click)="eliminarProducto(producto)"></button>
             </td>
           </tr>
         </ng-template>

@@ -8,7 +8,10 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Categoria } from 'src/app/models/backoffice/categoria.model';
-import { CategoriaService } from 'src/app/services/service.index';
+import {
+  CategoriaService,
+  UsuarioService,
+} from 'src/app/services/service.index';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -59,7 +62,8 @@ export class CategoriasComponent implements OnInit, OnDestroy {
   constructor(
     private categoriaService: CategoriaService,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public usuarioService: UsuarioService
   ) {}
 
   ngOnInit(): void {

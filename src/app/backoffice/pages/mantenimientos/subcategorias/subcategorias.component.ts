@@ -12,6 +12,7 @@ import { Subcategoria } from 'src/app/models/backoffice/subcategoria.model';
 import {
   CategoriaService,
   SubcategoriaService,
+  UsuarioService,
 } from 'src/app/services/service.index';
 import { Categoria } from 'src/app/models/backoffice/categoria.model';
 
@@ -66,7 +67,8 @@ export class SubcategoriasComponent implements OnInit, OnDestroy {
     private subcategoriaService: SubcategoriaService,
     private categoriaService: CategoriaService,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public usuarioService: UsuarioService
   ) {}
 
   ngOnInit(): void {
