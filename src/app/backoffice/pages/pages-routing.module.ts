@@ -10,8 +10,7 @@ import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component'
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { ClientesComponent } from './mantenimientos/clientes/clientes.component';
 import { ProveedoresComponent } from './mantenimientos/proveedores/proveedores.component';
-
-
+import { CategoriasComponent } from './mantenimientos/categorias/categorias.component';
 
 const pagesRoutes: Routes = [
   {
@@ -19,21 +18,45 @@ const pagesRoutes: Routes = [
     component: PagesComponent,
     canActivate: [LoginGuard],
     children: [
-      { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
-      { path: 'perfil-usuario', component: PerfilUsuarioComponent, data: { titulo: 'Perfil de Usuario' } },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        data: { titulo: 'Dashboard' },
+      },
+      {
+        path: 'perfil-usuario',
+        component: PerfilUsuarioComponent,
+        data: { titulo: 'Perfil de Usuario' },
+      },
       // Inicio Rutas de administrador
-      { path: 'usuarios', canActivate: [AdminGuard], component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
+      {
+        path: 'usuarios',
+        canActivate: [AdminGuard],
+        component: UsuariosComponent,
+        data: { titulo: 'Mantenimiento de Usuarios' },
+      },
       // Fin Rutas de administrador
-      { path: 'clientes', component: ClientesComponent, data: { titulo: 'Clientes' } },
-      { path: 'proveedores', component: ProveedoresComponent, data: { titulo: 'Proveedores' } },
-
-    ]
+      {
+        path: 'clientes',
+        component: ClientesComponent,
+        data: { titulo: 'Clientes' },
+      },
+      {
+        path: 'proveedores',
+        component: ProveedoresComponent,
+        data: { titulo: 'Proveedores' },
+      },
+      {
+        path: 'categorias',
+        component: CategoriasComponent,
+        data: { titulo: 'Categorías' },
+      },
+    ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(pagesRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PagesRoutingModule {
-}
+export class PagesRoutingModule {}

@@ -1,0 +1,111 @@
+<div class="p-grid">
+  <div class="p-col-12">
+    <div class="card">
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nueva Categoría" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
+            (click)="crearCategoria()"></button>
+          <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger p-mb-2"
+            (click)="eliminarCategoriasSeleccionadas()" [disabled]="!categorias || !categorias.length"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="categorias" [columns]="columnas" [rows]="5" [paginator]="true"
+        [rowsPerPageOptions]="[5,10,20]" [(selection)]="categoriasSeleccionadas" [rowHover]="true" dataKey="nombre"
+        styleClass="p-datatable-categorias"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} categorías"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+            <h5 class="p-m-0">Gestión de Categorías</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (keyup)="dt.filterGlobal(txtBuscar.value, 'contains')"
+                placeholder="Buscar..." #txtBuscar />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
+                field="{{columna.field}}"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-categoria>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="categoria"></p-tableCheckbox>
+            </td>
+            <td><span class="p-column-title">Nombre</span>
+              {{categoria.nombre}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                (click)="editarCategoria(categoria)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                (click)="eliminarCategoria(categoria)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{categorias ? categorias.length : 0 }} categorías.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-dialog [(visible)]="categoriasDialogCrear" [style]="{width: '450px'}" header="Crear Categoría" [modal]="true"
+      styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="crearCategoriaForm" (ngSubmit)="guardarCategoria(crearCategoriaForm.value, 'crear')">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearCategoriaF.nombre.errors }" name="nombre"
+              autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && crearCategoriaF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+
+
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarCategoriasDialog('crear')"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+
+    <p-dialog [(visible)]="categoriasDialogEditar" [style]="{width: '450px'}" header="Editar Categoría" [modal]="true"
+      styleClass="p-fluid">
+      <ng-template pTemplate="content">
+        <form [formGroup]="editarCategoriaForm" (ngSubmit)="guardarCategoria(categoria, 'editar')">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" formControlName="nombre" [(ngModel)]="categoria.nombre"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarCategoriaF.nombre.errors }" name="nombre"
+              autofocus />
+            <small class="p-error" *ngIf="pulsadoSubmit && editarCategoriaF.nombre.errors">Nombre
+              es obligatorio.</small>
+          </div>
+
+          <div class="p-dialog-footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+              (click)="ocultarCategoriasDialog('editar')"></button>
+            <button pButton pRipple type="submit" label="Actualizar" icon="pi pi-check" class="p-button-text"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+  </div>
+</div>

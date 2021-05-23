@@ -13,19 +13,19 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { PasswordModule } from 'primeng/password';
 
-
 // paginas
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { ClientesComponent } from './mantenimientos/clientes/clientes.component';
 import { ProveedoresComponent } from './mantenimientos/proveedores/proveedores.component';
-
+import { ProductosComponent } from './mantenimientos/productos/productos.component';
+import { CategoriasComponent } from './mantenimientos/categorias/categorias.component';
+import { SubcategoriasComponent } from './mantenimientos/subcategorias/subcategorias.component';
 
 // componentes
 import { PagesComponent } from './pages.component';
 import { ConfirmationService } from 'primeng/api';
-
 
 @NgModule({
   declarations: [
@@ -34,7 +34,10 @@ import { ConfirmationService } from 'primeng/api';
     UsuariosComponent,
     PerfilUsuarioComponent,
     ClientesComponent,
-    ProveedoresComponent
+    ProveedoresComponent,
+    ProductosComponent,
+    CategoriasComponent,
+    SubcategoriasComponent,
   ],
   imports: [
     PagesRoutingModule,
@@ -50,8 +53,8 @@ import { ConfirmationService } from 'primeng/api';
     DialogModule,
     ConfirmDialogModule,
     RadioButtonModule,
-    PasswordModule
+    PasswordModule,
   ],
   providers: [ConfirmationService],
 })
-export class PagesModule { }
+export class PagesModule {}
