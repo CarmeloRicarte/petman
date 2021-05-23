@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -12,9 +12,9 @@ import { Proveedor } from '../../../models/backoffice/proveedor.model';
 export class ProveedorService {
   token = localStorage.getItem('tokenUsuario');
 
-  constructor(public http: HttpClient, private toastr: ToastrService) {}
+  constructor(public http: HttpClient) {}
 
-  get headers(): Object {
+  get headers(): object {
     return {
       headers: {
         'x-token': this.token,
