@@ -45,10 +45,6 @@
             <td><span class="p-column-title">Nombre</span>
               {{cliente.nombre}}
             </td>
-
-            <td><span class="p-column-title">Apellidos</span>
-              {{cliente.apellidos}}
-            </td>
             <td><span class="p-column-title">Población</span>
               {{cliente.poblacion}}
             </td>
@@ -91,13 +87,6 @@
               autofocus />
             <small class="p-error" *ngIf="pulsadoSubmit && crearClienteF.nombre.errors">Nombre
               es obligatorio.</small>
-          </div>
-          <div class="p-field">
-            <label for="apellidos">Apellidos</label>
-            <input type="text" pInputText id="apellidos" formControlName="apellidos"
-              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearClienteF.apellidos.errors }" name="apellidos" />
-            <small class="p-error" *ngIf="pulsadoSubmit && crearClienteF.apellidos.errors">Apellidos son
-              obligatorios.</small>
           </div>
 
           <div class="p-field">
@@ -158,14 +147,6 @@
               autofocus />
             <small class="p-error" *ngIf="pulsadoSubmit && editarClienteF.nombre.errors">Nombre
               es obligatorio.</small>
-          </div>
-          <div class="p-field">
-            <label for="apellidos">Apellidos</label>
-            <input type="text" pInputText id="apellidos" formControlName="apellidos" [(ngModel)]="cliente.apellidos"
-              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarClienteF.apellidos.errors }"
-              name="apellidos" />
-            <small class="p-error" *ngIf="pulsadoSubmit && editarClienteF.apellidos.errors">Apellidos son
-              obligatorios.</small>
           </div>
 
           <div class="p-field">

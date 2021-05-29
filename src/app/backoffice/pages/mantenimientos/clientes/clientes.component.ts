@@ -68,7 +68,6 @@ export class ClientesComponent implements OnInit, OnDestroy {
     this.cargarClientes();
     this.columnas = [
       { field: 'nombre', header: 'Nombre' },
-      { field: 'apellidos', header: 'Apellidos' },
       { field: 'poblacion', header: 'Población' },
       { field: 'direccion', header: 'Dirección' },
       { field: 'telefono', header: 'Teléfono' },
@@ -77,7 +76,6 @@ export class ClientesComponent implements OnInit, OnDestroy {
     ];
     this.crearClienteForm = this.fb.group({
       nombre: new FormControl('', Validators.required),
-      apellidos: new FormControl('', Validators.required),
       poblacion: new FormControl('', Validators.required),
       direccion: new FormControl('', Validators.required),
       telefono: new FormControl('', [
@@ -95,7 +93,6 @@ export class ClientesComponent implements OnInit, OnDestroy {
 
     this.editarClienteForm = this.fb.group({
       nombre: new FormControl('', Validators.required),
-      apellidos: new FormControl('', Validators.required),
       poblacion: new FormControl('', Validators.required),
       direccion: new FormControl('', Validators.required),
       telefono: new FormControl('', [
@@ -160,9 +157,7 @@ export class ClientesComponent implements OnInit, OnDestroy {
       }
       this.clienteService.actualizarCliente(cliente).subscribe(
         (res: any) => {
-          this.toastr.success(
-            `Cliente ${res.cliente.nombre} ${res.cliente.apellidos} actualizado!`
-          );
+          this.toastr.success(`Cliente ${res.cliente.nombre} actualizado!`);
           this.ocultarClientesDialog(accion);
           this.cargarClientes();
         },
@@ -180,9 +175,7 @@ export class ClientesComponent implements OnInit, OnDestroy {
       }
       this.clienteService.crearCliente(cliente).subscribe(
         (res: any) => {
-          this.toastr.success(
-            `Cliente ${res.cliente.nombre} ${res.cliente.apellidos} creado!`
-          );
+          this.toastr.success(`Cliente ${res.cliente.nombre} creado!`);
           this.ocultarClientesDialog(accion);
           this.cargarClientes();
         },
@@ -202,7 +195,7 @@ export class ClientesComponent implements OnInit, OnDestroy {
   eliminarCliente(cliente: Cliente) {
     Swal.fire({
       title: '¿Borrar cliente?',
-      text: `Está a punto de borrar a ${cliente.nombre} ${cliente.apellidos}`,
+      text: `Está a punto de borrar a ${cliente.nombre}`,
       icon: 'warning',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
@@ -215,7 +208,7 @@ export class ClientesComponent implements OnInit, OnDestroy {
           () => {
             Swal.fire(
               'Eliminado!',
-              `${cliente.nombre} ${cliente.apellidos} fue eliminado correctamente`,
+              `${cliente.nombre} fue eliminado correctamente`,
               'success'
             );
             this.cargarClientes();
