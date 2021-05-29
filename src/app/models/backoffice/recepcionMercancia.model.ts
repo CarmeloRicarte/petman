@@ -3,7 +3,7 @@ import { Proveedor } from './proveedor.model';
 
 export interface RecepcionMercancia {
   numPedido: string;
-  fechaRecepcion: Date;
+  fechaRecepcion: string;
   proveedor: Proveedor;
   productos: Producto[];
   uid?: string;

@@ -57,8 +57,7 @@
 
 <form (ngSubmit)="enviarRecepcion(productosEnTabla, accion)" #form="ngForm">
   <p-table #dt [value]="productosEnTabla" [columns]="columnas" [rows]="10" [paginator]="true"
-    [(selection)]="productosSeleccionadosEnTabla" [rowsPerPageOptions]="[10,25,50]" dataKey="nombre"
-    currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} productos" [showCurrentPageReport]="true">
+    [(selection)]="productosSeleccionadosEnTabla" [rowsPerPageOptions]="[10,25,50]" dataKey="nombre">
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
         <h5 class="p-m-0">Productos a recepcionar</h5>

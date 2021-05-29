@@ -215,12 +215,9 @@ export class GestionarRecepcionMercanciaComponent implements OnInit, OnDestroy {
     }
 
     const recepcion = {
-      uid: this.recepcion.uid ? this.recepcion.uid : '',
+      uid: this.recepcion?.uid ? this.recepcion.uid : '',
       numPedido: this.gestionarRecepcionForm.value.numPedido,
-      fechaRecepcion:
-        typeof this.gestionarRecepcionForm.value.fechaRecepcion !== 'string'
-          ? this.gestionarRecepcionForm.value.fechaRecepcion.toLocaleDateString()
-          : this.gestionarRecepcionForm.value.fechaRecepcion,
+      fechaRecepcion: this.gestionarRecepcionForm.value.fechaRecepcion,
       proveedor: this.gestionarRecepcionForm.value.proveedor,
       productos,
     };
