@@ -52,6 +52,34 @@ export class ProductoService {
     );
   }
 
+  actualizarCantidadProducto(producto: any) {
+    const url = `${environment.urlServicios}/productos/${producto.uid}/updateCantidad?token=${this.token}`;
+    return this.http.put(url, producto, this.headers).pipe(
+      map(
+        (resp: any) => {
+          return resp;
+        },
+        (err: any) => {
+          return err;
+        }
+      )
+    );
+  }
+
+  actualizarPrecioProducto(producto: any) {
+    const url = `${environment.urlServicios}/productos/${producto.uid}/updatePrecio?token=${this.token}`;
+    return this.http.put(url, producto, this.headers).pipe(
+      map(
+        (resp: any) => {
+          return resp;
+        },
+        (err: any) => {
+          return err;
+        }
+      )
+    );
+  }
+
   /**
    * Funcion para obtener los productos
    */

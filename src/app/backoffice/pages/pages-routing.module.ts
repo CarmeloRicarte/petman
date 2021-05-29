@@ -13,6 +13,10 @@ import { ProveedoresComponent } from './mantenimientos/proveedores/proveedores.c
 import { CategoriasComponent } from './mantenimientos/categorias/categorias.component';
 import { SubcategoriasComponent } from './mantenimientos/subcategorias/subcategorias.component';
 import { ProductosComponent } from './mantenimientos/productos/productos.component';
+import { EnvioMercanciaComponent } from './mantenimientos/envio-mercancia/envio-mercancia.component';
+import { RecepcionMercanciaComponent } from './mantenimientos/recepcion-mercancia/recepcion-mercancia.component';
+import { GestionarEnvioMercanciaComponent } from './mantenimientos/gestionar-envio-mercancia/gestionar-envio-mercancia.component';
+import { GestionarRecepcionMercanciaComponent } from './mantenimientos/gestionar-recepcion-mercancia/gestionar-recepcion-mercancia.component';
 
 const pagesRoutes: Routes = [
   {
@@ -62,6 +66,29 @@ const pagesRoutes: Routes = [
         path: 'productos',
         component: ProductosComponent,
         data: { titulo: 'Productos' },
+      },
+      {
+        path: 'envio-mercancia',
+        component: EnvioMercanciaComponent,
+        data: { titulo: 'Envíos de Mercancía' },
+      },
+      {
+        path: 'recepcion-mercancia',
+        component: RecepcionMercanciaComponent,
+        data: { titulo: 'Recepciones de Mercancía' },
+      },
+      { path: 'gestionar-envio', component: GestionarEnvioMercanciaComponent },
+      {
+        path: 'gestionar-envio/:uid',
+        component: GestionarEnvioMercanciaComponent,
+      },
+      {
+        path: 'gestionar-recepcion',
+        component: GestionarRecepcionMercanciaComponent,
+      },
+      {
+        path: 'gestionar-recepcion/:uid',
+        component: GestionarRecepcionMercanciaComponent,
       },
     ],
   },

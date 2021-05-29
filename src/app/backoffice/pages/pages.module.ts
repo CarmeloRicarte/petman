@@ -15,6 +15,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { PasswordModule } from 'primeng/password';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 // paginas
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
@@ -25,6 +27,10 @@ import { ProveedoresComponent } from './mantenimientos/proveedores/proveedores.c
 import { ProductosComponent } from './mantenimientos/productos/productos.component';
 import { CategoriasComponent } from './mantenimientos/categorias/categorias.component';
 import { SubcategoriasComponent } from './mantenimientos/subcategorias/subcategorias.component';
+import { EnvioMercanciaComponent } from './mantenimientos/envio-mercancia/envio-mercancia.component';
+import { RecepcionMercanciaComponent } from './mantenimientos/recepcion-mercancia/recepcion-mercancia.component';
+import { GestionarRecepcionMercanciaComponent } from './mantenimientos/gestionar-recepcion-mercancia/gestionar-recepcion-mercancia.component';
+import { GestionarEnvioMercanciaComponent } from './mantenimientos/gestionar-envio-mercancia/gestionar-envio-mercancia.component';
 
 // componentes
 import { PagesComponent } from './pages.component';
@@ -41,6 +47,10 @@ import { ConfirmationService } from 'primeng/api';
     ProductosComponent,
     CategoriasComponent,
     SubcategoriasComponent,
+    EnvioMercanciaComponent,
+    RecepcionMercanciaComponent,
+    GestionarRecepcionMercanciaComponent,
+    GestionarEnvioMercanciaComponent,
   ],
   imports: [
     PagesRoutingModule,
@@ -59,6 +69,8 @@ import { ConfirmationService } from 'primeng/api';
     PasswordModule,
     DropdownModule,
     InputNumberModule,
+    CalendarModule,
+    MultiSelectModule,
   ],
   providers: [ConfirmationService, { provide: LOCALE_ID, useValue: 'es' }],
 })

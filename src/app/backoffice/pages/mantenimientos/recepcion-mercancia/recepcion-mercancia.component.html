@@ -1,0 +1,67 @@
+<div class="p-grid">
+  <div class="p-col-12">
+    <div class="card">
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nueva Recepción de Mercancía" icon="pi pi-plus"
+            class="p-button-success p-mr-2 p-mb-2" (click)="crearRecepcion()"></button>
+          <button pButton *ngIf="usuarioService.role === 'ADMIN_ROLE'" pRipple label="Borrar" icon="pi pi-trash"
+            class="p-button-danger p-mb-2" (click)="eliminarRecepcionesSeleccionadas()"
+            [disabled]="!recepciones || !recepciones.length"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="recepciones" [columns]="columnas" [rows]="10" [paginator]="true"
+        [rowsPerPageOptions]="[10,25,50]" [(selection)]="recepcionesSeleccionadas" [rowHover]="true" dataKey="numPedido"
+        styleClass="p-datatable-productos"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} recepciones de mercancía"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+            <h5 class="p-m-0">Recepciones de Mercancía</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (keyup)="dt.filterGlobal(txtBuscar.value, 'contains')"
+                placeholder="Buscar..." #txtBuscar />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
+                field="{{columna.field}}"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-recepcion>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="recepcion"></p-tableCheckbox>
+            </td>
+            <td>
+              {{recepcion.numPedido}}
+            </td>
+            <td>
+              {{recepcion.fechaRecepcion}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                (click)="editarRecepcion(recepcion)"></button>
+              <button pButton *ngIf="usuarioService.role === 'ADMIN_ROLE'" pRipple icon="pi pi-trash"
+                class="p-button-rounded p-button-warning" (click)="eliminarRecepcion(recepcion)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{recepciones ? recepciones.length : 0 }} recepciones de mercancía.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

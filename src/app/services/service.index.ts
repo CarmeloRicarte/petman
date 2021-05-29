@@ -7,3 +7,5 @@ export { ProveedorService } from './backoffice/proveedor/proveedor.service';
 export { CategoriaService } from './backoffice/categoria/categoria.service';
 export { SubcategoriaService } from './backoffice/subcategoria/subcategoria.service';
 export { ProductoService } from './backoffice/producto/producto.service';
+export { RecepcionMercanciaService } from './backoffice/recepcion-mercancia/recepcion-mercancia.service';
+export { EnvioMercanciaService } from './backoffice/envio-mercancia/envio-mercancia.service';
