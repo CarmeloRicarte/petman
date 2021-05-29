@@ -35,7 +35,7 @@ import {
     `,
   ],
 })
-export class RecepcionMercanciaComponent implements OnInit {
+export class RecepcionMercanciaComponent implements OnInit, OnDestroy {
   recepciones: RecepcionMercancia[] = [];
   recepcionesSeleccionadas: any[] = [];
   totalRecepciones = 0;
@@ -54,6 +54,10 @@ export class RecepcionMercanciaComponent implements OnInit {
       { field: 'numPedido', header: 'Núm.Pedido' },
       { field: 'fechaRecepcion', header: 'Fecha Recepción' },
     ];
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   cargarRecepciones() {
@@ -79,7 +83,7 @@ export class RecepcionMercanciaComponent implements OnInit {
   eliminarRecepcion(recepcion: RecepcionMercancia): void {
     Swal.fire({
       title: '¿Borrar recepción de mercancía?',
-      text: `Está a punto de la recepción de mercancía ${recepcion.numPedido}`,
+      text: `Está a punto de borrar la recepción de mercancía ${recepcion.numPedido}`,
       icon: 'warning',
       showCancelButton: true,
       cancelButtonText: 'Cancelar',
