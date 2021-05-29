@@ -13,7 +13,7 @@
 
       <p-table #dt [value]="recepciones" [columns]="columnas" [rows]="10" [paginator]="true"
         [rowsPerPageOptions]="[10,25,50]" [(selection)]="recepcionesSeleccionadas" [rowHover]="true" dataKey="numPedido"
-        styleClass="p-datatable-productos"
+        styleClass="p-datatable-recepciones"
         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} recepciones de mercancía"
         [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
