@@ -90,7 +90,8 @@
         <td pEditableColumn>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="producto.precio" name="precio">
+              <p-inputNumber [(ngModel)]="producto.precio" name="precio" [minFractionDigits]="2"
+                [maxFractionDigits]="2"></p-inputNumber>
             </ng-template>
             <ng-template pTemplate="output">
               {{producto.precio | currency:'EUR'}}
@@ -100,7 +101,7 @@
         <td pEditableColumn>
           <p-cellEditor>
             <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="producto.cantidad" name="cantidad">
+              <p-inputNumber [(ngModel)]="producto.cantidad" [min]="0" name="cantidad"></p-inputNumber>
             </ng-template>
             <ng-template pTemplate="output">
               {{producto.cantidad}}
