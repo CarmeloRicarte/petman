@@ -52,8 +52,8 @@ export class ProductoService {
     );
   }
 
-  actualizarCantidadProducto(producto: any) {
-    const url = `${environment.urlServicios}/productos/${producto.uid}/updateCantidad?token=${this.token}`;
+  actualizarCantidadProducto(producto: any, desde: 'envios' | 'recepciones') {
+    const url = `${environment.urlServicios}/productos/${producto.uid}/${desde}/updateCantidad?token=${this.token}`;
     return this.http.put(url, producto, this.headers).pipe(
       map(
         (resp: any) => {

@@ -144,9 +144,38 @@ export class GestionarRecepcionMercanciaComponent implements OnInit, OnDestroy {
   crearRecepcion(recepcion: RecepcionMercancia) {
     this.recepcionService.crearRecepcion(recepcion).subscribe(
       (res: any) => {
+        recepcion.productos.forEach((producto) => {
+          this.productoService
+            .actualizarCantidadProducto(producto, 'recepciones')
+            .subscribe(
+              (resCantidad: any) => {
+                console.log(resCantidad);
+                this.productoService
+                  .actualizarPrecioProducto(producto)
+                  .subscribe(
+                    (resPrecio: any) => {
+                      console.log(resPrecio);
+                    },
+                    (err: any) => {
+                      console.log(err);
+                      this.toastr.error(
+                        `Error al actualizar el precio del producto: ${err.error.msg}`
+                      );
+                    }
+                  );
+              },
+              (err: any) => {
+                console.log(err);
+                this.toastr.error(
+                  `Error al actualizar el stock del producto: ${err.error.msg}`
+                );
+              }
+            );
+        });
         this.toastr.success(
           `Recepción de mercancía con núm.pedido ${res.recepcion.numPedido} creada!`
         );
+        this.toastr.success(`Productos actualizados!`);
         this.router.navigate(['/admin/recepcion-mercancia']);
       },
       (err: any) => {
@@ -162,28 +191,32 @@ export class GestionarRecepcionMercanciaComponent implements OnInit, OnDestroy {
     this.recepcionService.actualizarRecepcion(recepcion).subscribe(
       (res: any) => {
         recepcion.productos.forEach((producto) => {
-          this.productoService.actualizarCantidadProducto(producto).subscribe(
-            (resCantidad: any) => {
-              console.log(resCantidad);
-              this.productoService.actualizarPrecioProducto(producto).subscribe(
-                (resPrecio: any) => {
-                  console.log(resPrecio);
-                },
-                (err: any) => {
-                  console.log(err);
-                  this.toastr.error(
-                    `Error al actualizar el precio del producto: ${err.error.msg}`
+          this.productoService
+            .actualizarCantidadProducto(producto, 'recepciones')
+            .subscribe(
+              (resCantidad: any) => {
+                console.log(resCantidad);
+                this.productoService
+                  .actualizarPrecioProducto(producto)
+                  .subscribe(
+                    (resPrecio: any) => {
+                      console.log(resPrecio);
+                    },
+                    (err: any) => {
+                      console.log(err);
+                      this.toastr.error(
+                        `Error al actualizar el precio del producto: ${err.error.msg}`
+                      );
+                    }
                   );
-                }
-              );
-            },
-            (err: any) => {
-              console.log(err);
-              this.toastr.error(
-                `Error al actualizar el stock del producto: ${err.error.msg}`
-              );
-            }
-          );
+              },
+              (err: any) => {
+                console.log(err);
+                this.toastr.error(
+                  `Error al actualizar el stock del producto: ${err.error.msg}`
+                );
+              }
+            );
         });
 
         this.toastr.success(
@@ -214,13 +247,24 @@ export class GestionarRecepcionMercanciaComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const recepcion = {
+    let recepcion = {
       uid: this.recepcion?.uid ? this.recepcion.uid : '',
       numPedido: this.gestionarRecepcionForm.value.numPedido,
-      fechaRecepcion: this.gestionarRecepcionForm.value.fechaRecepcion,
+      fechaRecepcion: '',
       proveedor: this.gestionarRecepcionForm.value.proveedor,
       productos,
     };
+
+    if (
+      this.recepcion?.fechaRecepcion ===
+      this.gestionarRecepcionForm.value.fechaRecepcion
+    ) {
+      recepcion.fechaRecepcion =
+        this.gestionarRecepcionForm.value.fechaRecepcion;
+    } else {
+      recepcion.fechaRecepcion =
+        this.gestionarRecepcionForm.value.fechaRecepcion.toLocaleDateString();
+    }
 
     if (accion === 'editar') {
       this.editarRecepcion(recepcion);
