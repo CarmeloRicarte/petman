@@ -1,0 +1,126 @@
+<h4>{{ titulo }} Envío de Mercancía</h4>
+
+<form novalidate [formGroup]="gestionarEnvioForm">
+  <div class="p-fluid p-formgrid-inline p-grid mt-3">
+    <div class="p-field p-col-4">
+      <label for="numEnvio">Número de Envío</label>
+      <input type="text" id="numEnvio" pInputText formControlName="numEnvio"
+        [ngClass]="{ 'ng-invalid ng-dirty': gestionarEnvioForm.controls?.numEnvio?.touched && gestionarEnvioForm.controls?.numEnvio?.errors }">
+      <small class="p-error"
+        *ngIf="gestionarEnvioForm.controls?.numEnvio?.touched && gestionarEnvioForm.controls?.numEnvio?.errors">Número
+        de envío
+        es obligatorio.</small>
+    </div>
+    <div class="p-field p-col-4">
+      <label for="fechaEnvio">Fecha de Envío</label>
+      <p-calendar formControlName="fechaEnvio" dateFormat="dd/mm/yy" [showIcon]="true" inputId="fechaEnvio"
+        [readonlyInput]="true">
+      </p-calendar>
+      <small class="p-error"
+        *ngIf="gestionarEnvioForm.controls?.fechaEnvio?.touched && gestionarEnvioForm.controls?.fechaEnvio?.errors">Fecha
+        de envío
+        es obligatoria.</small>
+    </div>
+    <div class="p-field p-col-4">
+      <label for="cliente">Cliente</label>
+      <p-dropdown [options]="clientes" formControlName="cliente" optionLabel="nombre" optionValue="uid" [filter]="true"
+        filterBy="nombre" [showClear]="true" placeholder="Seleccione un cliente"
+        [ngClass]="{ 'ng-invalid ng-dirty': gestionarEnvioForm.controls?.cliente?.touched && gestionarEnvioForm.controls?.cliente?.errors }">
+        <ng-template let-cliente>
+          <div>
+            <div>{{cliente.nombre}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+      <small class="p-error"
+        *ngIf="gestionarEnvioForm.controls?.cliente?.touched && gestionarEnvioForm.controls?.cliente?.errors">Cliente
+        es obligatorio.</small>
+    </div>
+
+    <div class="p-field p-col-4">
+      <p-multiSelect [options]="productos" #selectedProductos formControlName="selectedProductos" optionLabel="nombre"
+        placeholder="Seleccione Productos">
+      </p-multiSelect>
+      <span>Seleccione los productos ya existentes a añadir a la recepción</span>
+    </div>
+    <div class="p-col-2">
+      <button pButton pRipple label="Añadir Productos" icon="pi pi-plus" class="p-button-primary p-mr-2 p-button-sm"
+        (click)="addSelectedProducts(selectedProductos.value)"></button>
+    </div>
+  </div>
+</form>
+
+<form (ngSubmit)="enviarEnvio(productosEnTabla, accion)" #form="ngForm">
+  <p-table #dt [value]="productosEnTabla" [columns]="columnas" [rows]="10" [paginator]="true"
+    [(selection)]="productosSeleccionadosEnTabla" [rowsPerPageOptions]="[10,25,50]" dataKey="nombre">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+        <h5 class="p-m-0">Productos a enviar</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (keyup)="dt.filterGlobal(txtBuscar.value, 'contains')" placeholder="Buscar..."
+            #txtBuscar />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
+            field="{{columna.field}}"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-producto>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="producto"></p-tableCheckbox>
+        </td>
+        <td>
+          {{producto.nombre}}
+        </td>
+        <td>
+          {{producto.precio | currency:'EUR'}}
+        </td>
+        <td pEditableColumn>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-inputNumber [(ngModel)]="producto.cantidad" [min]="0" name="cantidad"></p-inputNumber>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{producto.cantidad}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            (click)="eliminarProductoTabla(producto)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        En total hay {{productosEnTabla ? productosEnTabla.length : 0 }} productos.
+      </div>
+    </ng-template>
+  </p-table>
+
+  <div class="p-grid p-mt-2">
+    <div class="p-col-2">
+      <p-button pRipple type="button" [routerLink]="['/admin/envio-mercancia']" routerLinkActive="router-link-active"
+        label="Volver al listado" styleClass="p-button-info" icon="pi pi-arrow-left" iconPos="left"></p-button>
+    </div>
+    <div class="p-col-2">
+      <button pButton pRipple type="button" label="Vaciar la tabla" icon="pi pi-trash" class="p-button-danger p-mr-2"
+        (click)="clearTable()"></button>
+    </div>
+    <div class="p-col-2">
+      <p-button type="submit" pRipple label="Guardar Envío" styleClass="p-button-success" icon="pi pi-check"
+        iconPos="left">
+      </p-button>
+    </div>
+  </div>
+</form>

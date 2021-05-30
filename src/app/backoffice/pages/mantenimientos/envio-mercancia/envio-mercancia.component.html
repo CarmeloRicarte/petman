@@ -1,0 +1,67 @@
+<div class="p-grid">
+  <div class="p-col-12">
+    <div class="card">
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="Nuevo Envío de Mercancía" icon="pi pi-plus"
+            class="p-button-success p-mr-2 p-mb-2" (click)="crearEnvio()"></button>
+          <button pButton *ngIf="usuarioService.role === 'ADMIN_ROLE'" pRipple label="Borrar" icon="pi pi-trash"
+            class="p-button-danger p-mb-2" (click)="eliminarEnviosSeleccionados()"
+            [disabled]="!envios || !envios.length"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="envios" [columns]="columnas" [rows]="10" [paginator]="true"
+        [rowsPerPageOptions]="[10,25,50]" [(selection)]="enviosSeleccionados" [rowHover]="true" dataKey="numEnvio"
+        styleClass="p-datatable-envios"
+        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} envios de mercancía"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+            <h5 class="p-m-0">Envíos de Mercancía</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (keyup)="dt.filterGlobal(txtBuscar.value, 'contains')"
+                placeholder="Buscar..." #txtBuscar />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
+                field="{{columna.field}}"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-envio>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="envio"></p-tableCheckbox>
+            </td>
+            <td>
+              {{envio.numEnvio}}
+            </td>
+            <td>
+              {{envio.fechaEnvio}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+                (click)="editarEnvio(envio)"></button>
+              <button pButton *ngIf="usuarioService.role === 'ADMIN_ROLE'" pRipple icon="pi pi-trash"
+                class="p-button-rounded p-button-warning" (click)="eliminarEnvio(envio)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{envios ? envios.length : 0 }} envíos de mercancía.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
