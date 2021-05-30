@@ -6,19 +6,19 @@ import { environment } from 'src/environments/environment';
 import { Cliente } from '../../../models/backoffice/cliente.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClienteService {
   token = localStorage.getItem('tokenUsuario');
 
-  constructor(public http: HttpClient, private toastr: ToastrService) { }
+  constructor(public http: HttpClient, private toastr: ToastrService) {}
 
   get headers(): Object {
     return {
       headers: {
-        'x-token': this.token
-      }
-    }
+        'x-token': this.token,
+      },
+    };
   }
 
   /**
@@ -27,14 +27,16 @@ export class ClienteService {
    */
   crearCliente(cliente: Cliente) {
     const url = `${environment.urlServicios}/clientes`;
-    return this.http.post(url, cliente, this.headers)
-      .pipe(
-        map((resp: any) => {
-          this.toastr.success(`Cliente ${resp.cliente.nombre} creado!`);
-        }, (err: any) => {
-          this.toastr.error(`Error al crear el cliente: ${err.error.msg}`);
-        })
-      );
+    return this.http.post(url, cliente, this.headers).pipe(
+      map(
+        (resp: any) => {
+          return resp;
+        },
+        (err: any) => {
+          return err;
+        }
+      )
+    );
   }
 
   /**
@@ -43,19 +45,21 @@ export class ClienteService {
    */
   actualizarCliente(cliente: Cliente) {
     const url = `${environment.urlServicios}/clientes/${cliente.uid}?token=${this.token}`;
-    return this.http.put(url, cliente, this.headers)
-      .pipe(
-        map((resp: any) => {
+    return this.http.put(url, cliente, this.headers).pipe(
+      map(
+        (resp: any) => {
           return resp;
-        }, (err: any) => {
+        },
+        (err: any) => {
           return err;
-        })
-      );
+        }
+      )
+    );
   }
 
   /**
-    * Funcion para obtener los clientes
-    */
+   * Funcion para obtener los clientes
+   */
   obtenerClientes() {
     const url = `${environment.urlServicios}/clientes`;
     return this.http.get(url, this.headers);
@@ -72,15 +76,16 @@ export class ClienteService {
    */
   eliminarCliente(cliente: Cliente) {
     const url = `${environment.urlServicios}/clientes/${cliente.uid}`;
-    return this.http.delete(url, this.headers)
-      .pipe(
-        map((resp: any) => {
+    return this.http.delete(url, this.headers).pipe(
+      map(
+        (resp: any) => {
           return resp;
-        }, (err: any) => {
+        },
+        (err: any) => {
           return err;
-        })
-      );
-
+        }
+      )
+    );
   }
 
   /**
@@ -89,13 +94,15 @@ export class ClienteService {
    */
   eliminarClientes(clientes: any[]) {
     const url = `${environment.urlServicios}/clientes/deleteSelected`;
-    return this.http.post(url, clientes, this.headers)
-      .pipe(
-        map((resp: any) => {
+    return this.http.post(url, clientes, this.headers).pipe(
+      map(
+        (resp: any) => {
           return resp;
-        }, (err: any) => {
+        },
+        (err: any) => {
           return err;
-        })
-      );
+        }
+      )
+    );
   }
 }
