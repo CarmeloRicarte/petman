@@ -9,3 +9,4 @@ export { SubcategoriaService } from './backoffice/subcategoria/subcategoria.serv
 export { ProductoService } from './backoffice/producto/producto.service';
 export { RecepcionMercanciaService } from './backoffice/recepcion-mercancia/recepcion-mercancia.service';
 export { EnvioMercanciaService } from './backoffice/envio-mercancia/envio-mercancia.service';
+export { TpvService } from './backoffice/tpv/tpv.service';
