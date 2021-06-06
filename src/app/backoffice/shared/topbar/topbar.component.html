@@ -17,6 +17,7 @@
           [ngClass]="{'active-topmenuitem fadeInDown': appMain.activeTopbarItem === profile}">
           <a href="#" (click)="appMain.onTopbarItemClick($event,profile)">
             <img src="../../../../assets/layout/images/pages/avatar-profilemenu.png" alt="avatar profile menu" />
+            {{ nick }}
           </a>
           <ul class="fadeInDown">
             <li>

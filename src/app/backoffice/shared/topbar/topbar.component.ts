@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { AppComponent } from 'src/app/app.component';
@@ -8,15 +8,23 @@ import { PagesComponent } from '../../pages/pages.component';
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.scss']
+  styleUrls: ['./topbar.component.scss'],
 })
-export class TopbarComponent implements OnDestroy {
-
+export class TopbarComponent implements OnInit, OnDestroy {
+  nick = '';
   subscription!: Subscription;
 
   items!: MenuItem[];
 
-  constructor(public app: AppComponent, public appMain: PagesComponent, private usuarioService: UsuarioService) { }
+  constructor(
+    public app: AppComponent,
+    public appMain: PagesComponent,
+    private usuarioService: UsuarioService
+  ) {}
+
+  ngOnInit(): void {
+    this.nick = this.getNickUsuario();
+  }
 
   cerrarSesion(): void {
     this.usuarioService.logout();
@@ -27,4 +35,8 @@ export class TopbarComponent implements OnDestroy {
     }
   }
 
+  getNickUsuario(): string {
+    const usuario = JSON.parse(localStorage.getItem('usuario') as string);
+    return JSON.stringify(usuario.nick).replace(/['"]+/g, '');
+  }
 }
