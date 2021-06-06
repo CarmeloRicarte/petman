@@ -4,11 +4,9 @@ import { AppComponent } from 'src/app/app.component';
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class PagesComponent implements OnInit {
-
   sidebarActive = false;
 
   staticMenuMobileActive!: boolean;
@@ -21,19 +19,13 @@ export class PagesComponent implements OnInit {
 
   topbarMenuActive!: boolean;
 
-  searchClick = false;
-
-  search = false;
-
   menuHoverActive = false;
 
   tituloTiendaMenu: any;
 
-  constructor(public app: AppComponent) { }
+  constructor(public app: AppComponent) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 
   onLayoutClick() {
     if (!this.topbarItemClick) {
@@ -50,11 +42,6 @@ export class PagesComponent implements OnInit {
       this.unblockBodyScroll();
     }
 
-    if (!this.searchClick) {
-      this.search = false;
-    }
-
-    this.searchClick = false;
     this.topbarItemClick = false;
     this.menuClick = false;
   }
@@ -66,11 +53,6 @@ export class PagesComponent implements OnInit {
       this.activeTopbarItem = null;
     } else {
       this.activeTopbarItem = item;
-    }
-
-    if (item.className === 'topbar-item search-item') {
-      this.search = !this.search;
-      this.searchClick = !this.searchClick;
     }
 
     event.preventDefault();
@@ -134,9 +116,13 @@ export class PagesComponent implements OnInit {
     if (document.body.classList) {
       document.body.classList.remove('blocked-scroll');
     } else {
-      document.body.className = document.body.className.replace(new RegExp('(^|\\b)' +
-        'blocked-scroll'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+      document.body.className = document.body.className.replace(
+        new RegExp(
+          '(^|\\b)' + 'blocked-scroll'.split(' ').join('|') + '(\\b|$)',
+          'gi'
+        ),
+        ' '
+      );
     }
   }
-
 }

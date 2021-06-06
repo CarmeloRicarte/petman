@@ -13,19 +13,6 @@
 
     <div class="layout-topbar-right">
       <ul class="layout-topbar-actions">
-        <li #searchItem class="topbar-item search-item" [ngClass]="{'active-topmenuitem': appMain.search}">
-          <a tabindex="0" (click)="appMain.onTopbarItemClick($event,searchItem)">
-            <i class="topbar-icon pi pi-search"></i>
-          </a>
-
-          <div class="search-input-wrapper">
-            <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input type="text" pInputText placeholder="Buscar..." (click)="appMain.searchClick = true;" />
-            </span>
-          </div>
-        </li>
-
         <li #profile class="topbar-item user-profile"
           [ngClass]="{'active-topmenuitem fadeInDown': appMain.activeTopbarItem === profile}">
           <a href="#" (click)="appMain.onTopbarItemClick($event,profile)">
