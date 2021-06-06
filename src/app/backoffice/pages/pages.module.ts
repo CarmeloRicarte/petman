@@ -18,7 +18,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
 
+import { ConfirmationService } from 'primeng/api';
+
 // paginas
+import { PagesComponent } from './pages.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
@@ -31,11 +34,8 @@ import { EnvioMercanciaComponent } from './mantenimientos/envio-mercancia/envio-
 import { RecepcionMercanciaComponent } from './mantenimientos/recepcion-mercancia/recepcion-mercancia.component';
 import { GestionarRecepcionMercanciaComponent } from './mantenimientos/gestionar-recepcion-mercancia/gestionar-recepcion-mercancia.component';
 import { GestionarEnvioMercanciaComponent } from './mantenimientos/gestionar-envio-mercancia/gestionar-envio-mercancia.component';
-
-// componentes
-import { PagesComponent } from './pages.component';
-import { ConfirmationService } from 'primeng/api';
-
+import { CrearVentaComponent } from './mantenimientos/ventas/crear-venta/crear-venta.component';
+import { ListadoVentasComponent } from './mantenimientos/ventas/listado-ventas/listado-ventas.component';
 @NgModule({
   declarations: [
     PagesComponent,
@@ -51,6 +51,8 @@ import { ConfirmationService } from 'primeng/api';
     RecepcionMercanciaComponent,
     GestionarRecepcionMercanciaComponent,
     GestionarEnvioMercanciaComponent,
+    CrearVentaComponent,
+    ListadoVentasComponent,
   ],
   imports: [
     PagesRoutingModule,
