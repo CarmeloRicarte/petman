@@ -5,6 +5,7 @@ export interface Venta {
   cliente: Cliente;
   productos: Producto[];
   importeTotal: number;
+  formaPago: string;
   fechaVenta: Date;
   uid?: string;
 }

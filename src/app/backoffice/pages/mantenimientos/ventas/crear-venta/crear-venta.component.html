@@ -18,20 +18,49 @@
         es obligatorio.</small>
     </div>
 
-    <div class="p-field p-col-8">
+    <div class="p-field p-col-5">
       <label>Seleccione los productos a añadir a la recepción</label>
       <p-multiSelect [options]="productos" #selectedProductos formControlName="selectedProductos" optionLabel="nombre"
         placeholder="Seleccione Productos" [disabled]="accion == 'visualizar'">
       </p-multiSelect>
     </div>
-    <div class="p-col-2 p-offset-10">
+    <div class="p-field-radiobutton p-col-3 p-d-flex">
+      <div class="p-grid p-mr-3">
+        <div class="p-col">
+          <label for="formaPago">Forma de pago:</label>
+        </div>
+      </div>
+      <div class="p-grid">
+        <div class="p-col">
+          <p-radioButton name="formaPago" value="efectivo" formControlName="formaPago" label="Efectivo"
+            [disabled]="accion == 'visualizar'"
+            [ngClass]="{ 'ng-invalid ng-dirty': gestionarVentaForm.controls?.formaPago?.dirty && gestionarVentaForm.controls?.formaPago?.errors }">
+          </p-radioButton>
+        </div>
+        <div class="p-col">
+          <p-radioButton name="formaPago" value="tarjeta" formControlName="formaPago" label="Tarjeta"
+            [disabled]="accion == 'visualizar'"
+            [ngClass]="{ 'ng-invalid ng-dirty': gestionarVentaForm.controls?.formaPago?.dirty && gestionarVentaForm.controls?.formaPago?.errors }">
+            ></p-radioButton>
+        </div>
+        <small class="p-error"
+          *ngIf="gestionarVentaForm.controls?.formaPago?.dirty && gestionarVentaForm.controls?.formaPago?.errors">Forma
+          de pago
+          es obligatorio.</small>
+      </div>
+    </div>
+
+  </div>
+  <div class="p-fluid p-formgrid-inline p-grid mt-3">
+    <div class="p-col-2 p-offset-7">
       <button *ngIf="accion == 'crear'" pButton pRipple label="Añadir Productos" icon="pi pi-plus"
+        [disabled]="gestionarVentaForm.get('selectedProductos')?.value == []"
         class="p-button-primary p-mr-2 p-button-sm" (click)="addSelectedProducts(selectedProductos.value)"></button>
     </div>
   </div>
 </form>
 
-<form (ngSubmit)="enviarVenta(productosEnTabla, accion)" #form="ngForm">
+<form (ngSubmit)="enviarVenta(productosEnTabla)" #form="ngForm">
   <p-table #dt [value]="productosEnTabla" [columns]="columnas" [rows]="5" [paginator]="true"
     [(selection)]="productosSeleccionadosEnTabla" [rowsPerPageOptions]="[5,15,25]" dataKey="nombre"
     (onEditComplete)="calcularImporteTotal(productosEnTabla)">

@@ -84,6 +84,7 @@ export class CrearVentaComponent implements OnInit, OnDestroy {
   cargarForm(): void {
     this.gestionarVentaForm = this.fb.group({
       cliente: new FormControl('', Validators.required),
+      formaPago: new FormControl(undefined, Validators.required),
       selectedProductos: new FormControl([]),
     });
   }
@@ -91,6 +92,7 @@ export class CrearVentaComponent implements OnInit, OnDestroy {
   cargarFormWatch(): void {
     this.gestionarVentaForm.patchValue({
       cliente: this.venta.cliente,
+      formaPago: this.venta.formaPago,
     });
     this.importeTotal = this.venta.importeTotal;
   }
@@ -137,11 +139,11 @@ export class CrearVentaComponent implements OnInit, OnDestroy {
     );
   }
 
-  enviarVenta(productos: any[], accion: string) {
+  enviarVenta(productos: any[]) {
     if (this.gestionarVentaForm.invalid || this.productosEnTabla.length === 0) {
       Swal.fire(
         'Error al crear la venta',
-        'Los campos obligatorios deben ser cumplimentados correctamente y la tabla de productos no puede estar vacía.',
+        'Los campos deben ser cumplimentados correctamente y la tabla de productos no puede estar vacía.',
         'error'
       );
       return;
@@ -152,6 +154,7 @@ export class CrearVentaComponent implements OnInit, OnDestroy {
       cliente: this.gestionarVentaForm.value.cliente,
       productos,
       importeTotal: this.importeTotal,
+      formaPago: this.gestionarVentaForm.value.formaPago,
       fechaVenta: new Date(),
     };
 
