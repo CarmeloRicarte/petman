@@ -52,7 +52,10 @@ export class ProductoService {
     );
   }
 
-  actualizarCantidadProducto(producto: any, desde: 'envios' | 'recepciones') {
+  actualizarCantidadProducto(
+    producto: any,
+    desde: 'envios' | 'recepciones' | 'ventas'
+  ) {
     const url = `${environment.urlServicios}/productos/${producto.uid}/${desde}/updateCantidad?token=${this.token}`;
     return this.http.put(url, producto, this.headers).pipe(
       map(
@@ -85,6 +88,11 @@ export class ProductoService {
    */
   obtenerProductos() {
     const url = `${environment.urlServicios}/productos`;
+    return this.http.get(url, this.headers);
+  }
+
+  obtenerProductosConStock() {
+    const url = `${environment.urlServicios}/productos/conStock`;
     return this.http.get(url, this.headers);
   }
 
