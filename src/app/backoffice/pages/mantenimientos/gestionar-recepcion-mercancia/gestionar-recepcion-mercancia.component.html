@@ -70,9 +70,6 @@
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 3rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
         <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
             field="{{columna.field}}"></p-sortIcon>
         </th>
@@ -81,9 +78,6 @@
     </ng-template>
     <ng-template pTemplate="body" let-producto>
       <tr>
-        <td>
-          <p-tableCheckbox [value]="producto"></p-tableCheckbox>
-        </td>
         <td>
           {{producto.nombre}}
         </td>
