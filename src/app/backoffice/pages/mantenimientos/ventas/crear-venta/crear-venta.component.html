@@ -1,1 +1,115 @@
-<p>crear-venta works!</p>
+<h4>{{ titulo }} Venta</h4>
+
+<form novalidate [formGroup]="gestionarVentaForm">
+  <div class="p-fluid p-formgrid-inline p-grid mt-3">
+    <div class="p-field p-col-4">
+      <label for="cliente">Cliente</label>
+      <p-dropdown [options]="clientes" formControlName="cliente" optionLabel="nombre" optionValue="uid" [filter]="true"
+        filterBy="nombre" [showClear]="true" placeholder="Seleccione un cliente" [disabled]="accion == 'visualizar'"
+        [ngClass]="{ 'ng-invalid ng-dirty': gestionarVentaForm.controls?.cliente?.touched && gestionarVentaForm.controls?.cliente?.errors }">
+        <ng-template let-cliente>
+          <div>
+            <div>{{cliente.nombre}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+      <small class="p-error"
+        *ngIf="gestionarVentaForm.controls?.cliente?.touched && gestionarVentaForm.controls?.cliente?.errors">Cliente
+        es obligatorio.</small>
+    </div>
+
+    <div class="p-field p-col-8">
+      <label>Seleccione los productos a añadir a la recepción</label>
+      <p-multiSelect [options]="productos" #selectedProductos formControlName="selectedProductos" optionLabel="nombre"
+        placeholder="Seleccione Productos" [disabled]="accion == 'visualizar'">
+      </p-multiSelect>
+    </div>
+    <div class="p-col-2 p-offset-10">
+      <button *ngIf="accion == 'crear'" pButton pRipple label="Añadir Productos" icon="pi pi-plus"
+        class="p-button-primary p-mr-2 p-button-sm" (click)="addSelectedProducts(selectedProductos.value)"></button>
+    </div>
+  </div>
+</form>
+
+<form (ngSubmit)="enviarVenta(productosEnTabla, accion)" #form="ngForm">
+  <p-table #dt [value]="productosEnTabla" [columns]="columnas" [rows]="5" [paginator]="true"
+    [(selection)]="productosSeleccionadosEnTabla" [rowsPerPageOptions]="[5,15,25]" dataKey="nombre"
+    (onEditComplete)="calcularImporteTotal(productosEnTabla)">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+        <h5 class="p-m-0">Productos en la venta</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (keyup)="dt.filterGlobal(txtBuscar.value, 'contains')" placeholder="Buscar..."
+            #txtBuscar />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
+            field="{{columna.field}}"></p-sortIcon>
+        </th>
+        <th *ngIf="accion == 'crear'"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-producto>
+      <tr>
+        <td>
+          {{producto.nombre}}
+        </td>
+        <td pEditableColumn>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-inputNumber [(ngModel)]="producto.cantidad" [min]="0" name="cantidad"></p-inputNumber>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{producto.cantidad}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          {{producto.precio | currency:'EUR'}}
+        </td>
+        <td>
+          {{producto.precio * producto.cantidad | currency:'EUR' }}
+        </td>
+        <td *ngIf="accion == 'crear'">
+          <button *ngIf="accion == 'crear'" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            (click)="eliminarProductoTabla(producto)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <tr>
+        <td colspan="2">
+          Importe Total:
+        </td>
+        <td colspan="4">
+          {{ importeTotal | currency:'EUR' }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        En total hay {{productosEnTabla ? productosEnTabla.length : 0 }} productos.
+      </div>
+    </ng-template>
+  </p-table>
+
+  <div class="p-grid p-mt-2">
+    <div class="p-col-2">
+      <p-button pRipple type="button" [routerLink]="['/admin/tpv/listado-ventas']" routerLinkActive="router-link-active"
+        label="Volver al listado" styleClass="p-button-info" icon="pi pi-arrow-left" iconPos="left"></p-button>
+    </div>
+    <div class="p-col-2">
+      <button *ngIf="accion == 'crear'" pButton pRipple type="button" label="Vaciar la tabla" icon="pi pi-trash"
+        class="p-button-danger p-mr-2" (click)="clearTable()"></button>
+    </div>
+    <div class="p-col-2" *ngIf="accion == 'crear'">
+      <p-button type="submit" pRipple label="Crear Venta" styleClass="p-button-success" icon="pi pi-check"
+        iconPos="left">
+      </p-button>
+    </div>
+  </div>
+</form>

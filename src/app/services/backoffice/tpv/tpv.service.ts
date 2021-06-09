@@ -35,8 +35,8 @@ export class TpvService {
     return this.http.get(url, this.headers);
   }
 
-  obtenerVenta(venta: any) {
-    const url = `${environment.urlServicios}/tpv/${venta.uid}`;
+  obtenerVenta(uidVenta: any) {
+    const url = `${environment.urlServicios}/tpv/${uidVenta}`;
     return this.http.get(url, this.headers);
   }
 

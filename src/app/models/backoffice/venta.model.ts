@@ -5,6 +5,6 @@ export interface Venta {
   cliente: Cliente;
   productos: Producto[];
   importeTotal: number;
-  fechaVenta?: Date;
+  fechaVenta: Date;
   uid?: string;
 }

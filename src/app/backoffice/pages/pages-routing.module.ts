@@ -97,6 +97,10 @@ const pagesRoutes: Routes = [
         component: CrearVentaComponent,
       },
       {
+        path: 'tpv/venta/:uid',
+        component: CrearVentaComponent,
+      },
+      {
         path: 'tpv/listado-ventas',
         component: ListadoVentasComponent,
       },

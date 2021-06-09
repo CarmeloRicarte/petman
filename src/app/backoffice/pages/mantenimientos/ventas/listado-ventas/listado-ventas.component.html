@@ -1,1 +1,64 @@
-<p>listado-ventas works!</p>
+<div class="p-grid">
+  <div class="p-col-12">
+    <div class="card">
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <button pButton *ngIf="usuarioService.role === 'ADMIN_ROLE'" pRipple label="Borrar" icon="pi pi-trash"
+            class="p-button-danger p-mb-2" (click)="eliminarVentasSeleccionadas()"
+            [disabled]="!ventas || !ventas.length"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="ventas" [columns]="columnas" [rows]="10" [paginator]="true"
+        [rowsPerPageOptions]="[10,25,50]" [(selection)]="ventasSeleccionadas" [rowHover]="true" dataKey="uid"
+        styleClass="p-datatable-ventas" currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} ventas"
+        [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+            <h5 class="p-m-0">Ventas</h5>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (keyup)="dt.filterGlobal(txtBuscar.value, 'contains')"
+                placeholder="Buscar..." #txtBuscar />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th *ngFor="let columna of columnas" pSortableColumn="{{columna.field}}">{{columna.header}} <p-sortIcon
+                field="{{columna.field}}"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-venta>
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="venta"></p-tableCheckbox>
+            </td>
+            <td>
+              {{venta.fechaVenta | date:'short'}}
+            </td>
+            <td>
+              {{venta.importeTotal | currency:'EUR'}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info p-mr-2"
+                (click)="visualizarVenta(venta)"></button>
+              <button pButton *ngIf="usuarioService.role === 'ADMIN_ROLE'" pRipple icon="pi pi-trash"
+                class="p-button-rounded p-button-warning" (click)="eliminarVenta(venta)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="p-d-flex p-ai-center p-jc-between">
+            En total hay {{ventas ? ventas.length : 0 }} ventas.
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
