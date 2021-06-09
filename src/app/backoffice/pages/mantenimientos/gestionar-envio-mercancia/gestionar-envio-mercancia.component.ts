@@ -31,8 +31,6 @@ export class GestionarEnvioMercanciaComponent implements OnInit, OnDestroy {
 
   gestionarEnvioForm = new FormGroup({});
 
-  crearClienteForm!: FormGroup;
-  clientesDialogCrear!: boolean;
   productosEnTabla: any[] = [];
   productosSeleccionadosEnTabla: any[] = [];
 
@@ -223,7 +221,7 @@ export class GestionarEnvioMercanciaComponent implements OnInit, OnDestroy {
   }
 
   cargarProductos() {
-    this.productoService.obtenerProductos().subscribe(
+    this.productoService.obtenerProductosConStock().subscribe(
       (res: any) => {
         this.productos = res.productos;
       },
