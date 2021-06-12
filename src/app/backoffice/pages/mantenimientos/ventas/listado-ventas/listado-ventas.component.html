@@ -3,6 +3,8 @@
     <div class="card">
       <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left">
+          <button pButton pRipple label="Nueva Venta" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2"
+            (click)="crearVenta()"></button>
           <button pButton *ngIf="usuarioService.role === 'ADMIN_ROLE'" pRipple label="Borrar" icon="pi pi-trash"
             class="p-button-danger p-mb-2" (click)="eliminarVentasSeleccionadas()"
             [disabled]="!ventas || !ventas.length"></button>
@@ -44,6 +46,9 @@
             </td>
             <td>
               {{venta.importeTotal | currency:'EUR'}}
+            </td>
+            <td>
+              {{venta.formaPago | uppercase }}
             </td>
             <td>
               <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info p-mr-2"

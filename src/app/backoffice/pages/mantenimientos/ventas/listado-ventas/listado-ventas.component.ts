@@ -49,6 +49,7 @@ export class ListadoVentasComponent implements OnInit, OnDestroy {
     this.columnas = [
       { field: 'fechaVenta', header: 'Fecha Venta' },
       { field: 'importeTotal', header: 'Importe Total' },
+      { field: 'formaPago', header: 'Forma Pago' },
     ];
   }
 
@@ -124,5 +125,9 @@ export class ListadoVentasComponent implements OnInit, OnDestroy {
         );
       }
     });
+  }
+
+  crearVenta(): void {
+    this.router.navigate(['admin/tpv/crear']);
   }
 }
