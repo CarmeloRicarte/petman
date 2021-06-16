@@ -40,6 +40,16 @@ export class TpvService {
     return this.http.get(url, this.headers);
   }
 
+  obtenerProductosMasVendidos() {
+    const url = `${environment.urlServicios}/tpv/masVendidos`;
+    return this.http.get(url, this.headers);
+  }
+
+  obtenerProductosMenosVendidos() {
+    const url = `${environment.urlServicios}/tpv/menosVendidos`;
+    return this.http.get(url, this.headers);
+  }
+
   eliminarVenta(venta: any) {
     const url = `${environment.urlServicios}/tpv/${venta.uid}`;
     return this.http.delete(url, this.headers).pipe(

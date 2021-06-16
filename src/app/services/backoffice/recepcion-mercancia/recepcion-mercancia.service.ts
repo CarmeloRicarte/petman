@@ -53,6 +53,16 @@ export class RecepcionMercanciaService {
     return this.http.get(url, this.headers);
   }
 
+  obtenerProductosMasComprados() {
+    const url = `${environment.urlServicios}/recepciones/masComprados`;
+    return this.http.get(url, this.headers);
+  }
+
+  obtenerProductosMenosComprados() {
+    const url = `${environment.urlServicios}/recepciones/menosComprados`;
+    return this.http.get(url, this.headers);
+  }
+
   eliminarRecepcion(recepcion: any) {
     const url = `${environment.urlServicios}/recepciones/${recepcion.uid}`;
     return this.http.delete(url, this.headers).pipe(

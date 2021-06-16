@@ -53,6 +53,16 @@ export class EnvioMercanciaService {
     return this.http.get(url, this.headers);
   }
 
+  obtenerProductosMasVendidos() {
+    const url = `${environment.urlServicios}/envios/masVendidosEnvios`;
+    return this.http.get(url, this.headers);
+  }
+
+  obtenerProductosMenosVendidos() {
+    const url = `${environment.urlServicios}/envios/menosVendidosEnvios`;
+    return this.http.get(url, this.headers);
+  }
+
   eliminarEnvio(envio: any) {
     const url = `${environment.urlServicios}/envios/${envio.uid}`;
     return this.http.delete(url, this.headers).pipe(
