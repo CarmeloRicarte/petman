@@ -37,6 +37,9 @@
               "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
+            "allowedCommonJsDependencies": [
+              "chart.js"
+            ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js"
             ]
@@ -65,7 +68,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumError": "6kb"
                 }
               ]
             }
