@@ -19,6 +19,7 @@ import { GestionarEnvioMercanciaComponent } from './mantenimientos/gestionar-env
 import { GestionarRecepcionMercanciaComponent } from './mantenimientos/gestionar-recepcion-mercancia/gestionar-recepcion-mercancia.component';
 import { CrearVentaComponent } from './mantenimientos/ventas/crear-venta/crear-venta.component';
 import { ListadoVentasComponent } from './mantenimientos/ventas/listado-ventas/listado-ventas.component';
+import { GraficosComponent } from './graficos/graficos.component';
 
 const pagesRoutes: Routes = [
   {
@@ -103,6 +104,10 @@ const pagesRoutes: Routes = [
       {
         path: 'tpv/listado-ventas',
         component: ListadoVentasComponent,
+      },
+      {
+        path: 'graficos',
+        component: GraficosComponent,
       },
     ],
   },

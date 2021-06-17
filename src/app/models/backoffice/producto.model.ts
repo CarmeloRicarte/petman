@@ -9,3 +9,8 @@ export interface Producto {
   unidadMedida: string;
   uid?: string;
 }
+
+export interface ProductoGrafico {
+  nombre: string;
+  cantidad: number;
+}

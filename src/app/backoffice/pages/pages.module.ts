@@ -17,7 +17,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
-
+import { ChartModule } from 'primeng/chart';
 import { ConfirmationService } from 'primeng/api';
 
 // paginas
@@ -36,6 +36,7 @@ import { GestionarRecepcionMercanciaComponent } from './mantenimientos/gestionar
 import { GestionarEnvioMercanciaComponent } from './mantenimientos/gestionar-envio-mercancia/gestionar-envio-mercancia.component';
 import { CrearVentaComponent } from './mantenimientos/ventas/crear-venta/crear-venta.component';
 import { ListadoVentasComponent } from './mantenimientos/ventas/listado-ventas/listado-ventas.component';
+import { GraficosComponent } from './graficos/graficos.component';
 @NgModule({
   declarations: [
     PagesComponent,
@@ -53,6 +54,7 @@ import { ListadoVentasComponent } from './mantenimientos/ventas/listado-ventas/l
     GestionarEnvioMercanciaComponent,
     CrearVentaComponent,
     ListadoVentasComponent,
+    GraficosComponent,
   ],
   imports: [
     PagesRoutingModule,
@@ -73,6 +75,7 @@ import { ListadoVentasComponent } from './mantenimientos/ventas/listado-ventas/l
     InputNumberModule,
     CalendarModule,
     MultiSelectModule,
+    ChartModule,
   ],
   providers: [ConfirmationService, { provide: LOCALE_ID, useValue: 'es' }],
 })

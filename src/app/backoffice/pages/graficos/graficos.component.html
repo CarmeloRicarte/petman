@@ -1,0 +1,35 @@
+<h1 class="p-mb-3">Gráficos</h1>
+<h2 class="p-mb-5">Ventas</h2>
+
+<div class="p-grid p-mb-5">
+  <div class="p-col-6">
+    <h3>Productos más vendidos TPV</h3>
+    <p-chart type="doughnut" [data]="productosMasVendidosTPV"></p-chart>
+  </div>
+  <div class="p-col-6">
+    <h3>Productos menos vendidos TPV</h3>
+    <p-chart type="doughnut" [data]="productosMenosVendidosTPV"></p-chart>
+  </div>
+</div>
+<div class="p-grid p-mb-5">
+  <div class="p-col-6">
+    <h3>Productos más vendidos Envíos</h3>
+    <p-chart type="doughnut" [data]="productosMasVendidosEnvios"></p-chart>
+
+  </div>
+  <div class="p-col-6">
+    <h3>Productos menos vendidos Envíos</h3>
+    <p-chart type="doughnut" [data]="productosMenosVendidosEnvios"></p-chart>
+  </div>
+</div>
+<h2 class="p-mb-3 p-mb-5">Compras</h2>
+<div class="p-grid">
+  <div class="p-col-6">
+    <h3>Productos más comprados</h3>
+    <p-chart type="doughnut" [data]="productosMasComprados"></p-chart>
+  </div>
+  <div class="p-col-6">
+    <h3>Productos menos comprados</h3>
+    <p-chart type="doughnut" [data]="productosMenosComprados"></p-chart>
+  </div>
+</div>
