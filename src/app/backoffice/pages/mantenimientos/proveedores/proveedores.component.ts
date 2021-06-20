@@ -7,8 +7,12 @@ import {
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { Categoria } from 'src/app/models/backoffice/categoria.model';
 import { Proveedor } from 'src/app/models/backoffice/proveedor.model';
-import { ProveedorService } from 'src/app/services/service.index';
+import {
+  CategoriaService,
+  ProveedorService,
+} from 'src/app/services/service.index';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -42,6 +46,8 @@ export class ProveedoresComponent implements OnInit, OnDestroy {
   proveedores: Proveedor[] = [];
   proveedor!: Proveedor;
 
+  categorias: Categoria[] = [];
+
   proveedoresDialogCrear!: boolean;
   crearProveedorForm!: FormGroup;
 
@@ -58,12 +64,14 @@ export class ProveedoresComponent implements OnInit, OnDestroy {
 
   constructor(
     private proveedorService: ProveedorService,
+    private categoriaService: CategoriaService,
     private fb: FormBuilder,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.cargarProveedores();
+    this.cargarCategorias();
     this.columnas = [
       { field: 'nombre', header: 'Nombre' },
       { field: 'categoria', header: 'Categoría' },
@@ -134,6 +142,21 @@ export class ProveedoresComponent implements OnInit, OnDestroy {
       (res: any) => {
         this.proveedores = res.proveedores;
         this.totalProveedores = res.total;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  cargarCategorias() {
+    this.categoriaService.obtenerCategorias().subscribe(
+      (res: any) => {
+        this.categorias = res.categorias;
+        this.categorias.unshift({
+          nombre: 'Seleccione Categoría',
+          uid: '23423asdffgzd',
+        });
       },
       (err) => {
         console.log(err);

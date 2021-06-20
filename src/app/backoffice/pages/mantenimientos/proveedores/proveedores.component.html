@@ -95,12 +95,18 @@
               es obligatorio.</small>
           </div>
           <div class="p-field">
-            <label for="categoria">Categoría</label>
-            <input type="text" pInputText id="categoria" formControlName="categoria"
-              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProveedorF.categoria.errors }"
-              name="categoria" />
-            <small class="p-error" *ngIf="pulsadoSubmit && crearProveedorF.categoria.errors">Categoría es
-              obligatoria.</small>
+            <label for="categoria">Categoría asociada</label>
+            <p-dropdown [options]="categorias" formControlName="categoria" optionLabel="nombre" optionValue="uid"
+              [showClear]="true"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && crearProveedorF.categoria.errors }">
+              <ng-template let-categoria>
+                <div>
+                  <div>{{categoria.nombre}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <small class="p-error" *ngIf="pulsadoSubmit && crearProveedorF.categoria.errors">Categoría
+              es obligatoria.</small>
           </div>
 
           <div class="p-field">
@@ -173,12 +179,18 @@
               es obligatorio.</small>
           </div>
           <div class="p-field">
-            <label for="categoria">Categoría</label>
-            <input type="text" pInputText id="categoria" formControlName="categoria" [(ngModel)]="proveedor.categoria"
-              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProveedorF.categoria.errors }"
-              name="categoria" />
-            <small class="p-error" *ngIf="pulsadoSubmit && editarProveedorF.categoria.errors">Categoría es
-              obligatoria.</small>
+            <label for="categoria">Categoría asociada</label>
+            <p-dropdown [options]="categorias" formControlName="categoria" [(ngModel)]="proveedor.categoria"
+              optionLabel="nombre" optionValue="uid" [showClear]="true"
+              [ngClass]="{ 'ng-invalid ng-dirty': pulsadoSubmit && editarProveedorF.categoria.errors }">
+              <ng-template let-categoria>
+                <div>
+                  <div>{{categoria.nombre}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <small class="p-error" *ngIf="pulsadoSubmit && editarProveedorF.categoria.errors">Categoría
+              es obligatoria.</small>
           </div>
 
           <div class="p-field">
