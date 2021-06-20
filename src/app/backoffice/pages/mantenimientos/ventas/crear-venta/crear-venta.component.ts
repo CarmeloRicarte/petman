@@ -61,7 +61,7 @@ export class CrearVentaComponent implements OnInit, OnDestroy {
           this.accion = 'visualizar';
           this.cargarVenta(uid);
         } else {
-          this.titulo = 'Nuevo';
+          this.titulo = 'Nueva';
           this.accion = 'crear';
         }
       });
