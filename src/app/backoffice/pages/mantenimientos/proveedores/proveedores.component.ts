@@ -74,7 +74,6 @@ export class ProveedoresComponent implements OnInit, OnDestroy {
     this.cargarCategorias();
     this.columnas = [
       { field: 'nombre', header: 'Nombre' },
-      { field: 'categoria', header: 'Categoría' },
       { field: 'poblacion', header: 'Población' },
       { field: 'direccion', header: 'Dirección' },
       { field: 'telefono', header: 'Teléfono' },
